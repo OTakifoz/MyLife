@@ -49,152 +49,203 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   }
 
   var _isLogin = true;
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[300],
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  side: BorderSide(
-                    color: Colors.green[300]!,
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.amber, Colors.white],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft)),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.green[300]!,
+                    ),
                   ),
-                ),
-                color: Colors.green[900],
-                margin: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Form(
-                      key: formKey,
-                      //autovalidateMode: AutovalidateMode.onUserInteraction,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextFormField(
-                            cursorColor: Colors.white,
-                            autocorrect: false,
-                            autofocus: true,
-                            textCapitalization: TextCapitalization.none,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.email,
-                                color: Colors.white,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
+                  color: Colors.green[900],
+                  margin: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Form(
+                        key: formKey,
+                        //autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                              cursorColor: Colors.white,
+                              autocorrect: false,
+                              autofocus: true,
+                              textCapitalization: TextCapitalization.none,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                  Icons.email,
                                   color: Colors.white,
                                 ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                labelText: 'Email',
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
+                              onSaved: (newValue) {
+                                _enteredEmail = newValue!;
+                              },
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    !value.contains('@') ||
+                                    !value.trimRight().endsWith('.com')) {
+                                  return 'Please enter a valid email adress';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: passwordController,
+                              cursorColor: Colors.white,
+                              autofocus: true,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                  Icons.password,
                                   color: Colors.white,
                                 ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white)),
+                                labelText: 'Password',
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
+                              onSaved: (newValue) {
+                                _enteredPassword = newValue!;
+                              },
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    value.length < 6) {
+                                  return 'Password must be at least 6 characters long';
+                                }
+                                return null;
+                              },
+                              obscureText: true,
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            !_isLogin
+                                ? TextFormField(
+                                    controller: confirmPasswordController,
+                                    cursorColor: Colors.white,
+                                    autofocus: true,
+                                    keyboardType: TextInputType.text,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(
+                                        Icons.password,
+                                        color: Colors.white,
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                              color: Colors.white)),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                              color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                              color: Colors.white)),
+                                      labelText: 'Confirm Password',
+                                    ),
+                                    onSaved: (newValue) {
+                                      _enteredPassword = newValue!;
+                                    },
+                                    validator: (value) {
+                                      if (passwordController.text != value) {
+                                        return 'Passwords do not match';
+                                      }
+                                      return null;
+                                    },
+                                    obscureText: true,
+                                  )
+                                : const SizedBox(
+                                    height: 12,
+                                  ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green[300]),
+                              onPressed: () {
+                                _submit();
+                              },
+                              child: Text(
+                                _isLogin ? 'Log In' : 'SignUp',
+                                style: TextStyle(
+                                  color: Colors.green[900],
                                 ),
                               ),
-                              labelText: 'Email',
                             ),
-                            onSaved: (newValue) {
-                              _enteredEmail = newValue!;
-                            },
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@') ||
-                                  !value.trimRight().endsWith('.com')) {
-                                return 'Please enter a valid email adress';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            cursorColor: Colors.white,
-                            autofocus: true,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.password,
-                                color: Colors.white,
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
-                              labelText: 'Password',
-                            ),
-                            onSaved: (newValue) {
-                              _enteredPassword = newValue!;
-                            },
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  value.length < 6) {
-                                return 'Password must be at least 6 characters long';
-                              }
-                              return null;
-                            },
-                            obscureText: true,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green[300]),
-                            onPressed: () {
-                              _submit();
-                            },
-                            child: Text(
-                              _isLogin ? 'Log In' : 'SignUp',
-                              style: TextStyle(
-                                color: Colors.green[900],
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isLogin = !_isLogin;
+                                });
+                              },
+                              child: Text(
+                                _isLogin
+                                    ? 'Create an account'
+                                    : 'I already have an account',
+                                style: TextStyle(
+                                  color: Colors.green[300],
+                                ),
                               ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _isLogin = !_isLogin;
-                              });
-                            },
-                            child: Text(
-                              _isLogin
-                                  ? 'Create an account'
-                                  : 'I already have an account',
-                              style: TextStyle(
-                                color: Colors.green[300],
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

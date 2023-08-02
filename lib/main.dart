@@ -12,18 +12,20 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ProviderScope(
-        child: MaterialApp(
-            home: StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: ((context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SplashScreen();
-        }
-        if (snapshot.hasData) {
-          return const StartScreen();
-        }
-        return const AuthenticationScreen();
-      }),
-    ))),
+      child: MaterialApp(
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SplashScreen();
+            }
+            if (snapshot.hasData) {
+              return const StartScreen();
+            }
+            return const AuthenticationScreen();
+          }),
+        ),
+      ),
+    ),
   );
 }
