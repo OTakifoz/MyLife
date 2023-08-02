@@ -42,6 +42,7 @@ dependencies:
   accordion: ^2.5.1
   syncfusion_flutter_charts: ^22.2.5
   hooks_riverpod: ^2.3.7
+  firebase_core: ^2.15.0
 
 dev_dependencies:
   flutter_test:

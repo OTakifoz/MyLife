@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636218329027",
+    "project_id": "mylife-75e52",
+    "storage_bucket": "mylife-75e52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636218329027:android:9020a8b89d9b876c5a1f76",
+        "android_client_info": {
+          "package_name": "com.example.my_life"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636218329027-8v798juodqro1qh67gvfuilhqms5viev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1zAizIduMzA4nmLXVmmT2BVheOTkT0I8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636218329027-8v798juodqro1qh67gvfuilhqms5viev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
