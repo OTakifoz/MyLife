@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
@@ -156,7 +157,49 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              const CountrySelectionButton()
+              const CountrySelectionButton(),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 60,
+                child: Flex(direction: Axis.vertical, children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size.fromWidth(
+                          screenWidth - 32,
+                        ),
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          Text('Log Out',
+                              textAlign: TextAlign.center,
+                              style: whiteFontedStyle(20)
+                              // GoogleFonts.gloriaHallelujah(
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 20,
+                              //     textStyle: const TextStyle(color: Colors.white)),
+                              ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Icon(Icons.logout, size: 28),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
             ],
           ),
         ),
