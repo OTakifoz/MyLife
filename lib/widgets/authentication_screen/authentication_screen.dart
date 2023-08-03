@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_life/models/pallette.dart';
 
 final firebase = FirebaseAuth.instance;
 
@@ -84,36 +85,37 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
+                              style: whiteFontedStyle(16),
                               cursorColor: Colors.white,
                               autocorrect: false,
                               autofocus: true,
                               textCapitalization: TextCapitalization.none,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                prefixIcon: const Icon(
-                                  Icons.email,
-                                  color: Colors.white,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
+                                  prefixIcon: const Icon(
+                                    Icons.email,
                                     color: Colors.white,
                                   ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                labelText: 'Email',
-                              ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  labelText: 'Email',
+                                  labelStyle: whiteFontedStyle(16)),
                               onSaved: (newValue) {
                                 _enteredEmail = newValue!;
                               },
@@ -129,29 +131,30 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
+                              style: whiteFontedStyle(16),
                               controller: passwordController,
                               cursorColor: Colors.white,
                               autofocus: true,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
-                                prefixIcon: const Icon(
-                                  Icons.password,
-                                  color: Colors.white,
-                                ),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white)),
-                                labelText: 'Password',
-                              ),
+                                  prefixIcon: const Icon(
+                                    Icons.password,
+                                    color: Colors.white,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                          color: Colors.white)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                          color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                          color: Colors.white)),
+                                  labelText: 'Password',
+                                  labelStyle: whiteFontedStyle(16)),
                               onSaved: (newValue) {
                                 _enteredPassword = newValue!;
                               },
@@ -169,43 +172,53 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               height: 12,
                             ),
                             !_isLogin
-                                ? TextFormField(
-                                    controller: confirmPasswordController,
-                                    cursorColor: Colors.white,
-                                    autofocus: true,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(
-                                        Icons.password,
-                                        color: Colors.white,
+                                ? Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextFormField(
+                                        style: whiteFontedStyle(16),
+                                        controller: confirmPasswordController,
+                                        cursorColor: Colors.white,
+                                        autofocus: true,
+                                        keyboardType: TextInputType.text,
+                                        decoration: InputDecoration(
+                                            prefixIcon: const Icon(
+                                              Icons.password,
+                                              color: Colors.white,
+                                            ),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.white)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.white)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.white)),
+                                            labelText: 'Confirm Password',
+                                            labelStyle: whiteFontedStyle(16)),
+                                        onSaved: (newValue) {
+                                          _enteredPassword = newValue!;
+                                        },
+                                        validator: (value) {
+                                          if (passwordController.text !=
+                                              value) {
+                                            return 'Passwords do not match';
+                                          }
+                                          return null;
+                                        },
+                                        obscureText: true,
                                       ),
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white)),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white)),
-                                      labelText: 'Confirm Password',
-                                    ),
-                                    onSaved: (newValue) {
-                                      _enteredPassword = newValue!;
-                                    },
-                                    validator: (value) {
-                                      if (passwordController.text != value) {
-                                        return 'Passwords do not match';
-                                      }
-                                      return null;
-                                    },
-                                    obscureText: true,
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                    ],
                                   )
                                 : const SizedBox(
                                     height: 12,
@@ -216,12 +229,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               onPressed: () {
                                 _submit();
                               },
-                              child: Text(
-                                _isLogin ? 'Log In' : 'SignUp',
-                                style: TextStyle(
-                                  color: Colors.green[900],
-                                ),
-                              ),
+                              child: Text(_isLogin ? 'Log In' : 'SignUp',
+                                  style: whiteFontedStyle(16)),
                             ),
                             TextButton(
                               onPressed: () {
@@ -230,13 +239,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 });
                               },
                               child: Text(
-                                _isLogin
-                                    ? 'Create an account'
-                                    : 'I already have an account',
-                                style: TextStyle(
-                                  color: Colors.green[300],
-                                ),
-                              ),
+                                  _isLogin
+                                      ? 'Create an account'
+                                      : 'I already have an account',
+                                  style: whiteFontedStyle(14)),
                             ),
                           ],
                         ),
