@@ -81,7 +81,7 @@ class PropertyChart extends ConsumerWidget {
                         width: (screenWidth - 60) * 0.35,
                         child: Text(
                           style: colorlessFontedStyle(
-                            18,
+                            16,
                             person.person.gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
@@ -127,7 +127,7 @@ class PropertyChart extends ConsumerWidget {
                                             child: Text(
                                               '${person.person.health}%',
                                               style: colorlessFontedStyle(
-                                                18,
+                                                16,
                                                 person.person.gender ==
                                                         Gender.male
                                                     ? Colors.blue[900]
@@ -147,7 +147,7 @@ class PropertyChart extends ConsumerWidget {
                                     child: Text(
                                       '${person.person.appearence}%',
                                       style: colorlessFontedStyle(
-                                        18,
+                                        16,
                                         person.person.gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
@@ -172,7 +172,7 @@ class PropertyChart extends ConsumerWidget {
                         width: (screenWidth - 60) * 0.35,
                         child: Text(
                           style: colorlessFontedStyle(
-                            18,
+                            16,
                             person.person.gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
@@ -217,7 +217,7 @@ class PropertyChart extends ConsumerWidget {
                                             child: Text(
                                               '${person.person.happiness}%',
                                               style: colorlessFontedStyle(
-                                                18,
+                                                16,
                                                 person.person.gender ==
                                                         Gender.male
                                                     ? Colors.blue[900]
@@ -237,7 +237,7 @@ class PropertyChart extends ConsumerWidget {
                                     child: Text(
                                       '${person.person.appearence}%',
                                       style: colorlessFontedStyle(
-                                        18,
+                                        16,
                                         person.person.gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
@@ -262,7 +262,7 @@ class PropertyChart extends ConsumerWidget {
                         width: (screenWidth - 60) * 0.35,
                         child: Text(
                           style: colorlessFontedStyle(
-                            18,
+                            16,
                             person.person.gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
@@ -307,7 +307,7 @@ class PropertyChart extends ConsumerWidget {
                                             child: Text(
                                               '${person.person.appearence}%',
                                               style: colorlessFontedStyle(
-                                                18,
+                                                16,
                                                 person.person.gender ==
                                                         Gender.male
                                                     ? Colors.blue[900]
@@ -327,7 +327,7 @@ class PropertyChart extends ConsumerWidget {
                                     child: Text(
                                       '${person.person.appearence}%',
                                       style: colorlessFontedStyle(
-                                        18,
+                                        16,
                                         person.person.gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
@@ -352,7 +352,7 @@ class PropertyChart extends ConsumerWidget {
                         width: (screenWidth - 60) * 0.35,
                         child: Text(
                           style: colorlessFontedStyle(
-                            18,
+                            16,
                             person.person.gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
@@ -397,7 +397,7 @@ class PropertyChart extends ConsumerWidget {
                                             child: Text(
                                               '${person.person.intelligence}%',
                                               style: colorlessFontedStyle(
-                                                18,
+                                                16,
                                                 person.person.gender ==
                                                         Gender.male
                                                     ? Colors.blue[900]
@@ -417,7 +417,7 @@ class PropertyChart extends ConsumerWidget {
                                     child: Text(
                                       '${person.person.intelligence}%',
                                       style: colorlessFontedStyle(
-                                        18,
+                                        16,
                                         person.person.gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],

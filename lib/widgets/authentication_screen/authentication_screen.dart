@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_life/models/auth_sevice.dart';
 import 'package:my_life/models/pallette.dart';
 
 final firebase = FirebaseAuth.instance;
@@ -51,7 +52,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
   var _isLogin = true;
   var passwordController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +177,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                     children: [
                                       TextFormField(
                                         style: whiteFontedStyle(16),
-                                        controller: confirmPasswordController,
                                         cursorColor: Colors.white,
                                         autofocus: true,
                                         keyboardType: TextInputType.text,
@@ -223,14 +222,72 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 : const SizedBox(
                                     height: 12,
                                   ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green[300]),
-                              onPressed: () {
-                                _submit();
-                              },
-                              child: Text(_isLogin ? 'Log In' : 'SignUp',
-                                  style: whiteFontedStyle(16)),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        fixedSize: const Size.fromHeight(55),
+                                        backgroundColor: Colors.green[300]),
+                                    onPressed: () {
+                                      _submit();
+                                    },
+                                    child: Text(_isLogin ? 'Log In' : 'Sign Up',
+                                        style: whiteFontedStyle(16)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      AuthService().signInWithGoogle();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green[300],
+                                      fixedSize: const Size.fromHeight(55),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          width: 48,
+                                          height: 48,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(7.5),
+                                            child: Image.asset(
+                                                'assets/images/google-logo.png'),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Sign With Google',
+                                          style: whiteFontedStyle(16),
+                                        ),
+                                        const SizedBox(
+                                          width: 48,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             TextButton(
                               onPressed: () {
@@ -242,7 +299,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   _isLogin
                                       ? 'Create an account'
                                       : 'I already have an account',
-                                  style: whiteFontedStyle(14)),
+                                  style: whiteFontedStyle(16)),
                             ),
                           ],
                         ),
