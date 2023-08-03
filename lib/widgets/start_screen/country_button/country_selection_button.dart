@@ -57,14 +57,11 @@ class _CountrySelectionWidgetState
                 IconButton(
                     iconSize: 32,
                     onPressed: () {
-                      person.updateCurrentCountry(
-                          countries[randomCountry.nextInt(countries.length)]);
-                      person.updateHealth(
-                          countries[randomCountry.nextInt(countries.length)]
-                              .baseHealth);
-                      person.updateHappiness(
-                          countries[randomCountry.nextInt(countries.length)]
-                              .baseHappiness);
+                      var country =
+                          countries[randomCountry.nextInt(countries.length)];
+                      person.updateCurrentCountry(country);
+                      person.updateHealth(country.baseHealth);
+                      person.updateHappiness(country.baseHappiness);
                     },
                     icon: const Icon(Icons.autorenew))
               ],
