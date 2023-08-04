@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
-import 'package:my_life/providers/person_provider.dart';
+import 'package:my_life/providers/start_screen_provider.dart';
 import '../../../models/person.dart';
 
 class NameDialog extends ConsumerStatefulWidget {
@@ -18,7 +18,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final person = ref.watch(personProvider);
+    final startScreen = ref.watch(startScreenProvider);
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -26,7 +26,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
             width: 2,
             color: Colors.white,
           )),
-      backgroundColor: person.person.gender == Gender.male
+      backgroundColor: startScreen.person.gender == Gender.male
           ? Colors.blue[700]!
           : Colors.pink[700]!,
       title: Text('Type in a name', style: whiteBoldFontedStyle(20)),
@@ -124,9 +124,9 @@ class _NameDialogState extends ConsumerState<NameDialog> {
               onPressed: () {
                 if (nameController.text.isNotEmpty &&
                     lastNameController.text.isNotEmpty) {
-                  person.updateName(nameController.text);
+                  startScreen.updateName(nameController.text);
 
-                  person.updateLastName(lastNameController.text);
+                  startScreen.updateLastName(lastNameController.text);
 
                   Navigator.pop(context);
                 }
@@ -138,8 +138,8 @@ class _NameDialogState extends ConsumerState<NameDialog> {
             ),
             TextButton(
               onPressed: () {
-                person.updateName(null);
-                person.updateLastName(null);
+                startScreen.updateName(null);
+                startScreen.updateLastName(null);
 
                 Navigator.pop(context);
               },

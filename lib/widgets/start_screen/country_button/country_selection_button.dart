@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/lists/countries_list.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button_child.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_dialog.dart';
-import '../../../providers/person_provider.dart';
+import '../../../providers/start_screen_provider.dart';
 
 class CountrySelectionButton extends ConsumerStatefulWidget {
   const CountrySelectionButton({super.key});
@@ -24,7 +24,7 @@ class _CountrySelectionWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final person = ref.watch(personProvider);
+    final startScreen = ref.watch(startScreenProvider);
     final screenWidth = MediaQuery.of(context).size.width;
     final randomCountry = Random();
 
@@ -39,8 +39,8 @@ class _CountrySelectionWidgetState
             },
             style: ElevatedButton.styleFrom(
               fixedSize: Size.fromWidth(screenWidth - 32),
-              backgroundColor: person.person.currentCountry != null
-                  ? person.person.currentCountry!.countryColor
+              backgroundColor: startScreen.person.currentCountry != null
+                  ? startScreen.person.currentCountry!.countryColor
                   : Colors.grey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),
@@ -59,9 +59,9 @@ class _CountrySelectionWidgetState
                     onPressed: () {
                       var country =
                           countries[randomCountry.nextInt(countries.length)];
-                      person.updateCurrentCountry(country);
-                      person.updateHealth(country.baseHealth);
-                      person.updateHappiness(country.baseHappiness);
+                      startScreen.updateCurrentCountry(country);
+                      startScreen.updateHealth(country.baseHealth);
+                      startScreen.updateHappiness(country.baseHappiness);
                     },
                     icon: const Icon(Icons.autorenew))
               ],

@@ -4,7 +4,7 @@ import 'package:my_life/models/country.dart';
 import 'package:my_life/models/person.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PersonNotifier extends ChangeNotifier {
+class StartScreenNotifier extends ChangeNotifier {
   final person = Person(
       age: 0,
       gender: Gender.male,
@@ -84,6 +84,6 @@ class PersonNotifier extends ChangeNotifier {
   }
 }
 
-final personProvider = ChangeNotifierProvider<PersonNotifier>((ref) {
-  return PersonNotifier();
+final startScreenProvider = ChangeNotifierProvider<StartScreenNotifier>((ref) {
+  return StartScreenNotifier();
 });

@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
+import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button.dart';
 import 'package:my_life/widgets/main_screen/main_screen.dart';
-import 'package:my_life/providers/person_provider.dart';
+import 'package:my_life/providers/start_screen_provider.dart';
 import 'package:my_life/models/person.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_button.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -44,7 +45,8 @@ class _StartScreenState extends ConsumerState<StartScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    final person = ref.watch(personProvider);
+    final startScreen = ref.watch(startScreenProvider);
+    final newLife = ref.watch(lifeProvider);
 
     return Scaffold(
       body: Container(
@@ -67,26 +69,27 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        if (person.person.name == null &&
-                            person.person.lastName == null &&
-                            person.person.currentCountry != null) {
+                        if (startScreen.person.name == null &&
+                            startScreen.person.lastName == null &&
+                            startScreen.person.currentCountry != null) {
                           showErrorDialog(
                               'Please enter a name and a last name');
                         }
-                        if (person.person.name == null &&
-                            person.person.lastName == null &&
-                            person.person.currentCountry == null) {
+                        if (startScreen.person.name == null &&
+                            startScreen.person.lastName == null &&
+                            startScreen.person.currentCountry == null) {
                           showErrorDialog(
                               'Please enter a name and a last name, and select a country');
                         }
-                        if (person.person.currentCountry == null &&
-                            person.person.name != null &&
-                            person.person.lastName != null) {
+                        if (startScreen.person.currentCountry == null &&
+                            startScreen.person.name != null &&
+                            startScreen.person.lastName != null) {
                           showErrorDialog('Please select a country');
                         }
-                        if (person.person.name != null &&
-                            person.person.lastName != null &&
-                            person.person.currentCountry != null) {
+                        if (startScreen.person.name != null &&
+                            startScreen.person.lastName != null &&
+                            startScreen.person.currentCountry != null) {
+                          newLife.person = startScreen.person;
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const MainScreen(),
@@ -148,7 +151,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                         onToggle: (index) {
                           setState(() {
                             _selectedGender = Gender.values[index!];
-                            person.updateGender(_selectedGender);
+                            startScreen.updateGender(_selectedGender);
                           });
                         },
                       ),

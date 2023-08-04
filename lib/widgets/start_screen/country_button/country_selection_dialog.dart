@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import '../../../lists/countries_list.dart';
-import '../../../providers/person_provider.dart';
+import '../../../providers/start_screen_provider.dart';
 
 class CountrySelectionDialog extends ConsumerStatefulWidget {
   const CountrySelectionDialog({super.key});
@@ -19,7 +19,7 @@ class _CountrySelectionDialogState
     extends ConsumerState<CountrySelectionDialog> {
   @override
   Widget build(BuildContext context) {
-    final person = ref.read(personProvider);
+    final startScreen = ref.read(startScreenProvider);
     return AlertDialog(
       backgroundColor: Colors.green[300],
       shape: RoundedRectangleBorder(
@@ -61,9 +61,9 @@ class _CountrySelectionDialogState
                             width: double.maxFinite,
                             child: Center(child: Text(country.name))),
                         onPressed: () {
-                          person.updateCurrentCountry(country);
-                          person.updateHealth(country.baseHealth);
-                          person.updateHappiness(country.baseHappiness);
+                          startScreen.updateCurrentCountry(country);
+                          startScreen.updateHealth(country.baseHealth);
+                          startScreen.updateHappiness(country.baseHappiness);
                           Navigator.pop(context);
                         },
                       ),
@@ -75,7 +75,7 @@ class _CountrySelectionDialogState
       actions: [
         TextButton(
             onPressed: () {
-              person.updateCurrentCountry(null);
+              startScreen.updateCurrentCountry(null);
               Navigator.pop(context);
             },
             child: Text(

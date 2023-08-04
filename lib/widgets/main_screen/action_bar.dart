@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_life/providers/person_provider.dart';
+import 'package:my_life/providers/life_provider.dart';
 
 class ActionBar extends ConsumerWidget {
   const ActionBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final person = ref.watch(personProvider);
+    final person = ref.watch(lifeProvider);
     double widgetWidth = MediaQuery.of(context).size.width - 20;
     double widgetHeight = MediaQuery.of(context).size.height * 0.08;
     return Container(

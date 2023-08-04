@@ -5,7 +5,7 @@ import 'package:my_life/widgets/start_screen/name_button/name_dialog.dart';
 import 'dart:math';
 import '../../../lists/name_list.dart';
 import '../../../models/person.dart';
-import '../../../providers/person_provider.dart';
+import '../../../providers/start_screen_provider.dart';
 
 class NameButton extends ConsumerStatefulWidget {
   const NameButton({super.key});
@@ -23,7 +23,7 @@ class _NameButtonState extends ConsumerState<NameButton> {
   Widget build(BuildContext context) {
     final randomName = Random();
     final randomLastName = Random();
-    final person = ref.watch(personProvider);
+    final startScreen = ref.watch(startScreenProvider);
     return SizedBox(
       height: 60,
       width: double.maxFinite,
@@ -34,7 +34,7 @@ class _NameButtonState extends ConsumerState<NameButton> {
               showNameDialog();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: person.person.gender == Gender.male
+              backgroundColor: startScreen.person.gender == Gender.male
                   ? Colors.blue[700]
                   : Colors.pink[700],
               shape: RoundedRectangleBorder(
@@ -53,10 +53,10 @@ class _NameButtonState extends ConsumerState<NameButton> {
                 IconButton(
                     iconSize: 32,
                     onPressed: () {
-                      person.updateName(
+                      startScreen.updateName(
                         names[randomName.nextInt(lastnames.length)],
                       );
-                      person.updateLastName(
+                      startScreen.updateLastName(
                         names[randomLastName.nextInt(lastnames.length)],
                       );
                     },

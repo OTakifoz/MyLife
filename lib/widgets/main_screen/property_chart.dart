@@ -1,64 +1,73 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
+import 'package:my_life/providers/life_provider.dart';
 import '../../models/person.dart';
-import '../../providers/person_provider.dart';
 
 class PropertyChart extends ConsumerWidget {
   const PropertyChart({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final person = ref.watch(personProvider);
+    final person = ref.watch(lifeProvider);
     final screenWidth = MediaQuery.of(context).size.width;
 
     Color? healthBarColor;
-    if (person.person.health > 70) {
+
+    var _health = person.person!.health;
+    var _happiness = person.person!.happiness;
+    var _appearence = person.person!.appearence;
+    var _intelligence = person.person!.intelligence;
+    var _gender = person.person!.gender;
+
+    if (_health > 70) {
       healthBarColor = Colors.green;
     }
-    if (person.person.health <= 70 && person.person.health >= 50) {
+    if (_health <= 70 && _health >= 50) {
       healthBarColor = Colors.yellow;
     }
-    if (person.person.health < 50 && person.person.health >= 30) {
+    if (_health < 50 && _health >= 30) {
       healthBarColor = Colors.orange;
     }
-    if (person.person.health < 30) {
+    if (_health < 30) {
       healthBarColor = Colors.red;
     }
     Color? happinessBarColor;
-    if (person.person.happiness > 70) {
+    if (_happiness > 70) {
       happinessBarColor = Colors.green;
     }
-    if (person.person.happiness <= 70 && person.person.happiness >= 50) {
+    if (_happiness <= 70 && person.person!.happiness >= 50) {
       happinessBarColor = Colors.yellow;
     }
-    if (person.person.happiness < 50 && person.person.happiness >= 30) {
+    if (person.person!.happiness < 50 && _happiness >= 30) {
       happinessBarColor = Colors.orange;
     }
-    if (person.person.happiness < 30) {
+    if (_happiness < 30) {
       happinessBarColor = Colors.red;
     }
     Color? appearenceBarColor;
-    if (person.person.appearence > 70) {
+    if (_appearence > 70) {
       appearenceBarColor = Colors.green;
     }
-    if (person.person.appearence <= 70 && person.person.appearence >= 50) {
+    if (_appearence <= 70 && _appearence >= 50) {
       appearenceBarColor = Colors.yellow;
     }
-    if (person.person.appearence < 50 && person.person.appearence >= 30) {
+    if (_appearence < 50 && _appearence >= 30) {
       appearenceBarColor = Colors.orange;
     }
-    if (person.person.appearence < 30) {
+    if (_appearence < 30) {
       appearenceBarColor = Colors.red;
     }
     Color? intelligenceBarColor;
-    if (person.person.intelligence > 70) {
+    if (_intelligence > 70) {
       intelligenceBarColor = Colors.green;
     }
-    if (person.person.intelligence <= 70 && person.person.intelligence >= 30) {
+    if (_intelligence <= 70 && _intelligence >= 30) {
       intelligenceBarColor = Colors.yellow;
     }
-    if (person.person.intelligence < 30) {
+    if (_intelligence < 30) {
       intelligenceBarColor = Colors.red;
     }
 
@@ -82,7 +91,7 @@ class PropertyChart extends ConsumerWidget {
                         child: Text(
                           style: colorlessFontedStyle(
                             16,
-                            person.person.gender == Gender.male
+                            _gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
                           ),
@@ -112,24 +121,21 @@ class PropertyChart extends ConsumerWidget {
                                 ),
                               ),
                               height: barHeight,
-                              width: (screenWidth - 60) *
-                                  0.65 *
-                                  0.01 *
-                                  (person.person.health),
+                              width:
+                                  (screenWidth - 60) * 0.65 * 0.01 * (_health),
                               child: Row(
                                 children: [
                                   const Spacer(),
-                                  person.person.health >= 25
+                                  _health >= 25
                                       ? FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             child: Text(
-                                              '${person.person.health}%',
+                                              '$_health%',
                                               style: colorlessFontedStyle(
                                                 16,
-                                                person.person.gender ==
-                                                        Gender.male
+                                                _gender == Gender.male
                                                     ? Colors.blue[900]
                                                     : Colors.pink[900],
                                               ),
@@ -139,16 +145,16 @@ class PropertyChart extends ConsumerWidget {
                                       : const Spacer(),
                                 ],
                               )),
-                          person.person.health < 25
+                          _health < 25
                               ? FittedBox(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5),
                                     child: Text(
-                                      '${person.person.appearence}%',
+                                      '$_appearence%',
                                       style: colorlessFontedStyle(
                                         16,
-                                        person.person.gender == Gender.male
+                                        _gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
                                       ),
@@ -173,7 +179,7 @@ class PropertyChart extends ConsumerWidget {
                         child: Text(
                           style: colorlessFontedStyle(
                             16,
-                            person.person.gender == Gender.male
+                            _gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
                           ),
@@ -205,21 +211,20 @@ class PropertyChart extends ConsumerWidget {
                               width: (screenWidth - 60) *
                                   0.65 *
                                   0.01 *
-                                  (person.person.happiness),
+                                  (_happiness),
                               child: Row(
                                 children: [
                                   const Spacer(),
-                                  person.person.happiness >= 25
+                                  _happiness >= 25
                                       ? FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             child: Text(
-                                              '${person.person.happiness}%',
+                                              '$_happiness%',
                                               style: colorlessFontedStyle(
                                                 16,
-                                                person.person.gender ==
-                                                        Gender.male
+                                                _gender == Gender.male
                                                     ? Colors.blue[900]
                                                     : Colors.pink[900],
                                               ),
@@ -229,16 +234,16 @@ class PropertyChart extends ConsumerWidget {
                                       : const Spacer(),
                                 ],
                               )),
-                          person.person.happiness < 25
+                          _happiness < 25
                               ? FittedBox(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5),
                                     child: Text(
-                                      '${person.person.appearence}%',
+                                      '$_appearence%',
                                       style: colorlessFontedStyle(
                                         16,
-                                        person.person.gender == Gender.male
+                                        _gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
                                       ),
@@ -263,7 +268,7 @@ class PropertyChart extends ConsumerWidget {
                         child: Text(
                           style: colorlessFontedStyle(
                             16,
-                            person.person.gender == Gender.male
+                            _gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
                           ),
@@ -295,21 +300,20 @@ class PropertyChart extends ConsumerWidget {
                               width: (screenWidth - 60) *
                                   0.65 *
                                   0.01 *
-                                  (person.person.appearence),
+                                  (_appearence),
                               child: Row(
                                 children: [
                                   const Spacer(),
-                                  person.person.appearence >= 25
+                                  _appearence >= 25
                                       ? FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             child: Text(
-                                              '${person.person.appearence}%',
+                                              '$_appearence%',
                                               style: colorlessFontedStyle(
                                                 16,
-                                                person.person.gender ==
-                                                        Gender.male
+                                                _gender == Gender.male
                                                     ? Colors.blue[900]
                                                     : Colors.pink[900],
                                               ),
@@ -319,16 +323,16 @@ class PropertyChart extends ConsumerWidget {
                                       : const Spacer(),
                                 ],
                               )),
-                          person.person.appearence < 25
+                          _appearence < 25
                               ? FittedBox(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5),
                                     child: Text(
-                                      '${person.person.appearence}%',
+                                      '$_appearence%',
                                       style: colorlessFontedStyle(
                                         16,
-                                        person.person.gender == Gender.male
+                                        _gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
                                       ),
@@ -353,7 +357,7 @@ class PropertyChart extends ConsumerWidget {
                         child: Text(
                           style: colorlessFontedStyle(
                             16,
-                            person.person.gender == Gender.male
+                            _gender == Gender.male
                                 ? Colors.blue[900]
                                 : Colors.pink[900],
                           ),
@@ -385,21 +389,20 @@ class PropertyChart extends ConsumerWidget {
                               width: (screenWidth - 60) *
                                   0.65 *
                                   0.01 *
-                                  (person.person.intelligence),
+                                  (_intelligence),
                               child: Row(
                                 children: [
                                   const Spacer(),
-                                  person.person.intelligence >= 25
+                                  _intelligence >= 25
                                       ? FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             child: Text(
-                                              '${person.person.intelligence}%',
+                                              '$_intelligence%',
                                               style: colorlessFontedStyle(
                                                 16,
-                                                person.person.gender ==
-                                                        Gender.male
+                                                _gender == Gender.male
                                                     ? Colors.blue[900]
                                                     : Colors.pink[900],
                                               ),
@@ -409,16 +412,16 @@ class PropertyChart extends ConsumerWidget {
                                       : const Spacer(),
                                 ],
                               )),
-                          person.person.intelligence < 25
+                          _intelligence < 25
                               ? FittedBox(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5),
                                     child: Text(
-                                      '${person.person.intelligence}%',
+                                      '$_intelligence%',
                                       style: colorlessFontedStyle(
                                         16,
-                                        person.person.gender == Gender.male
+                                        _gender == Gender.male
                                             ? Colors.blue[900]
                                             : Colors.pink[900],
                                       ),
