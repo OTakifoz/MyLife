@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_life/models/auth_sevice.dart';
 import 'package:my_life/models/pallette.dart';
+import 'package:my_life/widgets/authentication_screen/forgot_password_dialog.dart';
 
 final firebase = FirebaseAuth.instance;
 
@@ -14,6 +15,11 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
+  void showResetPasswordDialog() {
+    showDialog(
+        context: context, builder: (context) => const ForgotPasswordDialog());
+  }
+
   final formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
   var _enteredPassword = '';
@@ -50,6 +56,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     }
   }
 
+  bool isChecked = false;
   var _isLogin = true;
   var passwordController = TextEditingController();
   @override
@@ -69,9 +76,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
-                      color: Colors.green[300]!,
-                    ),
                   ),
                   color: Colors.green[900],
                   margin: const EdgeInsets.all(20),
@@ -99,18 +103,21 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
                                     borderSide: const BorderSide(
+                                      width: 2,
                                       color: Colors.white,
                                     ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
                                     borderSide: const BorderSide(
+                                      width: 2,
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
                                     borderSide: const BorderSide(
+                                      width: 2,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -144,15 +151,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
                                       borderSide: const BorderSide(
-                                          color: Colors.white)),
+                                          width: 2, color: Colors.white)),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
                                       borderSide: const BorderSide(
-                                          color: Colors.white)),
+                                          width: 2, color: Colors.white)),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
                                       borderSide: const BorderSide(
-                                          color: Colors.white)),
+                                          width: 2, color: Colors.white)),
                                   labelText: 'Password',
                                   labelStyle: whiteFontedStyle(16)),
                               onSaved: (newValue) {
@@ -166,11 +173,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 }
                                 return null;
                               },
-                              obscureText: true,
+                              obscureText: !isChecked,
                             ),
-                            const SizedBox(
-                              height: 12,
-                            ),
+                            if (!_isLogin)
+                              const SizedBox(
+                                height: 12,
+                              ),
                             !_isLogin
                                 ? Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -189,16 +197,19 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 borderSide: const BorderSide(
+                                                    width: 2,
                                                     color: Colors.white)),
                                             enabledBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 borderSide: const BorderSide(
+                                                    width: 2,
                                                     color: Colors.white)),
                                             focusedBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 borderSide: const BorderSide(
+                                                    width: 2,
                                                     color: Colors.white)),
                                             labelText: 'Confirm Password',
                                             labelStyle: whiteFontedStyle(16)),
@@ -212,16 +223,46 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                           }
                                           return null;
                                         },
-                                        obscureText: true,
-                                      ),
-                                      const SizedBox(
-                                        height: 12,
+                                        obscureText: !isChecked,
                                       ),
                                     ],
                                   )
                                 : const SizedBox(
-                                    height: 12,
+                                    height: 0,
                                   ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        fillColor: MaterialStateProperty.all(
+                                            Colors.white),
+                                        checkColor: Colors.green[900],
+                                        value: isChecked,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isChecked = !isChecked;
+                                          });
+                                        }),
+                                    Text(
+                                      'Show Password',
+                                      style: whiteFontedStyle(12),
+                                    )
+                                  ],
+                                ),
+                                const Spacer(),
+                                if (_isLogin)
+                                  GestureDetector(
+                                    onTap: () {
+                                      showResetPasswordDialog();
+                                    },
+                                    child: Text(
+                                      'Forgot Password?',
+                                      style: whiteFontedStyle(12),
+                                    ),
+                                  )
+                              ],
+                            ),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -242,6 +283,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 ),
                               ],
                             ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Text('Or', style: whiteFontedStyle(16)),
                             const SizedBox(
                               height: 12,
                             ),
@@ -282,7 +327,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                         ),
                                         const SizedBox(
                                           width: 48,
-                                        )
+                                          height: 48,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(7.5),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -297,8 +346,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               },
                               child: Text(
                                   _isLogin
-                                      ? 'Create an account'
-                                      : 'I already have an account',
+                                      ? "Don't have an account? Create one"
+                                      : 'Already have an account? Login',
                                   style: whiteFontedStyle(16)),
                             ),
                           ],

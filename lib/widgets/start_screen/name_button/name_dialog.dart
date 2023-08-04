@@ -23,6 +23,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
           side: const BorderSide(
+            width: 2,
             color: Colors.white,
           )),
       backgroundColor: person.person.gender == Gender.male
@@ -48,13 +49,22 @@ class _NameDialogState extends ConsumerState<NameDialog> {
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(color: Colors.white)),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      )),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(color: Colors.white)),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      )),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(color: Colors.white)),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      )),
                   labelText: 'Name',
                   labelStyle: whiteFontedStyle(16)),
               validator: (value) {
@@ -78,13 +88,22 @@ class _NameDialogState extends ConsumerState<NameDialog> {
                 ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.white)),
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    )),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.white)),
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    )),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.white)),
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    )),
                 labelText: 'Last Name',
                 labelStyle: whiteFontedStyle(16),
               ),

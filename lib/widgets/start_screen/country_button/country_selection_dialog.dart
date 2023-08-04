@@ -23,6 +23,10 @@ class _CountrySelectionDialogState
     return AlertDialog(
       backgroundColor: Colors.green[300],
       shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: Colors.white,
+          width: 2,
+        ),
         borderRadius: BorderRadius.circular(20),
       ),
       content: SizedBox(
