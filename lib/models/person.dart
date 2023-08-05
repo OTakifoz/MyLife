@@ -23,4 +23,18 @@ class Person {
   String? name;
   String? lastName;
   Country? currentCountry;
+
+  Person copy() {
+    return Person(
+      age: age,
+      gender: gender,
+      happiness: happiness,
+      health: health,
+      intelligence: intelligence,
+      appearence: appearence,
+      lastName: lastName,
+      name: name,
+      currentCountry: currentCountry,
+    );
+  }
 }

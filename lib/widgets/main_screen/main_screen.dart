@@ -5,6 +5,7 @@ import 'package:my_life/models/person.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/action_bar.dart';
 import 'package:my_life/widgets/main_screen/property_chart.dart';
+import 'package:my_life/widgets/main_screen/side_drawer.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -19,6 +20,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     final person = ref.watch(lifeProvider);
 
     return Scaffold(
+      drawer: const SideDrawer(),
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.08,
         title: Text(

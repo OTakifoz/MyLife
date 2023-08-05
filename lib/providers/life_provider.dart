@@ -7,7 +7,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class LifeNotifier extends ChangeNotifier {
   Person? person;
 
-  // Let's allow the UI to add todos.
+  // Let's allow t
+  void updatePerson(Person newPerson) {
+    person = newPerson;
+    notifyListeners();
+  }
+
   void updateCurrentCountry(Country country) {
     person!.currentCountry = country;
     notifyListeners();

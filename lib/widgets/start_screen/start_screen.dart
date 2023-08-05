@@ -89,7 +89,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                         if (startScreen.person.name != null &&
                             startScreen.person.lastName != null &&
                             startScreen.person.currentCountry != null) {
-                          newLife.person = startScreen.person;
+                          newLife.person = startScreen.person.copy();
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const MainScreen(),
@@ -199,6 +199,63 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                ]),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                height: 60,
+                child: Flex(direction: Axis.vertical, children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (newLife.person?.name == null &&
+                            newLife.person?.lastName == null &&
+                            newLife.person?.currentCountry != null) {
+                          showErrorDialog(
+                              'Please enter a name and a last name');
+                        }
+                        if (newLife.person?.name == null &&
+                            newLife.person?.lastName == null &&
+                            newLife.person?.currentCountry == null) {
+                          showErrorDialog(
+                              'Please enter a name and a last name, and select a country');
+                        }
+                        if (newLife.person?.currentCountry == null &&
+                            newLife.person?.name != null &&
+                            newLife.person?.lastName != null) {
+                          showErrorDialog('Please select a country');
+                        }
+                        if (newLife.person?.name != null &&
+                            newLife.person?.lastName != null &&
+                            newLife.person?.currentCountry != null) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MainScreen(),
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size.fromWidth(
+                          screenWidth - 32,
+                        ),
+                        backgroundColor: Colors.green[900],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                      child: Text('Start New Life',
+                          textAlign: TextAlign.center,
+                          style: whiteFontedStyle(20)
+                          // GoogleFonts.gloriaHallelujah(
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //     textStyle: const TextStyle(color: Colors.white)),
+                          ),
                     ),
                   ),
                 ]),
