@@ -1,4 +1,5 @@
 // ignore_for_file: unused_field, avoid_print
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_life/models/auth_sevice.dart';
@@ -23,6 +24,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   final formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
   var _enteredPassword = '';
+  // ignore: prefer_final_fields
+  var _enteredUsername = '';
 
   void _submit() async {
     final isValid = formKey.currentState!.validate();
@@ -40,9 +43,16 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               email: _enteredEmail.trimRight(),
               password: _enteredPassword.trimRight());
         } else {
-          await firebase.createUserWithEmailAndPassword(
+          final userCredentials = await firebase.createUserWithEmailAndPassword(
               email: _enteredEmail.trimRight(),
               password: _enteredPassword.trimRight());
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredentials.user!.uid)
+              .set({
+            'username': _enteredUsername,
+            'email': _enteredEmail,
+          });
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {}
@@ -136,7 +146,65 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            if (!_isLogin)
+                              Column(
+                                children: [
+                                  TextFormField(
+                                    style: whiteFontedStyle(16),
+                                    cursorColor: Colors.white,
+                                    autocorrect: false,
+                                    autofocus: true,
+                                    textCapitalization: TextCapitalization.none,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.abc,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                            width: 2,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                            width: 2,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: const BorderSide(
+                                            width: 2,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        labelText: 'Username',
+                                        labelStyle: whiteFontedStyle(16)),
+                                    onSaved: (newValue) {
+                                      _enteredUsername = newValue!;
+                                    },
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty ||
+                                          value.trim().length < 4) {
+                                        return 'Please enter at least 4 characters';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
                             TextFormField(
                               style: whiteFontedStyle(16),
                               controller: passwordController,
@@ -318,7 +386,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(7.5),
                                             child: Image.asset(
-                                                'assets/images/google-logo.png'),
+                                                'assets/icons/google-icon.png'),
                                           ),
                                         ),
                                         Text(

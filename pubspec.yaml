@@ -44,6 +44,7 @@ dependencies:
   firebase_core: ^2.15.0
   firebase_auth: ^4.7.2
   google_sign_in: ^6.1.4
+  cloud_firestore: ^4.8.4
   
 
 dev_dependencies:
@@ -90,7 +91,15 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/plus-sign.png
-    - assets/images/google-logo.png
+    - assets/icons/google-icon.png
+    - assets/icons/sun-icon.png
+    - assets/icons/baby-icon.png
+    - assets/icons/logout-icon.png
+    - assets/icons/heart-icon.png
+    - assets/icons/happy-icon.png
+    - assets/icons/flame-icon.png
+    - assets/icons/brain-icon.png
+    - assets/icons/profile-icon.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

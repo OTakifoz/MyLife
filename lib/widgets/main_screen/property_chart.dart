@@ -38,10 +38,10 @@ class PropertyChart extends ConsumerWidget {
     if (_happiness > 70) {
       happinessBarColor = Colors.green;
     }
-    if (_happiness <= 70 && person.person!.happiness >= 50) {
+    if (_happiness <= 70 && _happiness >= 50) {
       happinessBarColor = Colors.yellow;
     }
-    if (person.person!.happiness < 50 && _happiness >= 30) {
+    if (_happiness < 50 && _happiness >= 30) {
       happinessBarColor = Colors.orange;
     }
     if (_happiness < 30) {
@@ -71,10 +71,12 @@ class PropertyChart extends ConsumerWidget {
       intelligenceBarColor = Colors.red;
     }
 
-    const barHeight = 25.0;
+    const barHeight = 20.0;
+    var barWidth = (screenWidth - 60) * 0.60;
+    var textWidth = (screenWidth - 60) * 0.40;
 
     return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.25,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
@@ -87,22 +89,36 @@ class PropertyChart extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: SizedBox(
-                        width: (screenWidth - 60) * 0.35,
-                        child: Text(
-                          style: colorlessFontedStyle(
-                            16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
-                          ),
-                          'Health',
-                          textAlign: TextAlign.left,
+                        width: textWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              style: colorlessFontedStyle(
+                                16,
+                                _gender == Gender.male
+                                    ? Colors.blue[900]
+                                    : Colors.pink[900],
+                              ),
+                              'Health',
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                                height: barHeight,
+                                child:
+                                    Image.asset('assets/icons/heart-icon.png')),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      width: (screenWidth - 60) * 0.65,
+                      width: barWidth,
                       height: barHeight,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -121,8 +137,7 @@ class PropertyChart extends ConsumerWidget {
                                 ),
                               ),
                               height: barHeight,
-                              width:
-                                  (screenWidth - 60) * 0.65 * 0.01 * (_health),
+                              width: barWidth * 0.01 * (_health),
                               child: Row(
                                 children: [
                                   const Spacer(),
@@ -175,22 +190,36 @@ class PropertyChart extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: SizedBox(
-                        width: (screenWidth - 60) * 0.35,
-                        child: Text(
-                          style: colorlessFontedStyle(
-                            16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
-                          ),
-                          'Happiness',
-                          textAlign: TextAlign.left,
+                        width: textWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              style: colorlessFontedStyle(
+                                16,
+                                _gender == Gender.male
+                                    ? Colors.blue[900]
+                                    : Colors.pink[900],
+                              ),
+                              'Happiness',
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                                height: barHeight,
+                                child:
+                                    Image.asset('assets/icons/happy-icon.png')),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      width: (screenWidth - 60) * 0.65,
+                      width: barWidth,
                       height: barHeight,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -208,10 +237,7 @@ class PropertyChart extends ConsumerWidget {
                                 ),
                               ),
                               height: barHeight,
-                              width: (screenWidth - 60) *
-                                  0.65 *
-                                  0.01 *
-                                  (_happiness),
+                              width: barWidth * 0.01 * (_happiness),
                               child: Row(
                                 children: [
                                   const Spacer(),
@@ -264,22 +290,36 @@ class PropertyChart extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: SizedBox(
-                        width: (screenWidth - 60) * 0.35,
-                        child: Text(
-                          style: colorlessFontedStyle(
-                            16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
-                          ),
-                          'Appearence',
-                          textAlign: TextAlign.left,
+                        width: textWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              style: colorlessFontedStyle(
+                                16,
+                                _gender == Gender.male
+                                    ? Colors.blue[900]
+                                    : Colors.pink[900],
+                              ),
+                              'Looks',
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                                height: barHeight,
+                                child:
+                                    Image.asset('assets/icons/flame-icon.png')),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      width: (screenWidth - 60) * 0.65,
+                      width: barWidth,
                       height: barHeight,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -297,10 +337,7 @@ class PropertyChart extends ConsumerWidget {
                                 ),
                               ),
                               height: barHeight,
-                              width: (screenWidth - 60) *
-                                  0.65 *
-                                  0.01 *
-                                  (_appearence),
+                              width: barWidth * 0.01 * (_appearence),
                               child: Row(
                                 children: [
                                   const Spacer(),
@@ -353,22 +390,36 @@ class PropertyChart extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: SizedBox(
-                        width: (screenWidth - 60) * 0.35,
-                        child: Text(
-                          style: colorlessFontedStyle(
-                            16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
-                          ),
-                          'Intelligence',
-                          textAlign: TextAlign.left,
+                        width: textWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              style: colorlessFontedStyle(
+                                16,
+                                _gender == Gender.male
+                                    ? Colors.blue[900]
+                                    : Colors.pink[900],
+                              ),
+                              'Smarts',
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                                height: barHeight,
+                                child:
+                                    Image.asset('assets/icons/brain-icon.png')),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      width: (screenWidth - 60) * 0.65,
+                      width: barWidth,
                       height: barHeight,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -386,10 +437,7 @@ class PropertyChart extends ConsumerWidget {
                                 ),
                               ),
                               height: barHeight,
-                              width: (screenWidth - 60) *
-                                  0.65 *
-                                  0.01 *
-                                  (_intelligence),
+                              width: barWidth * 0.01 * (_intelligence),
                               child: Row(
                                 children: [
                                   const Spacer(),
