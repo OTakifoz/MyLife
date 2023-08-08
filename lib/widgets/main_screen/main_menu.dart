@@ -38,7 +38,7 @@ class MainMenu extends ConsumerWidget {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(userData.data()!['username']),
+          title: Text(userData['username']),
         ),
       );
     }
@@ -47,6 +47,7 @@ class MainMenu extends ConsumerWidget {
       backgroundColor:
           _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: Text('Main Menu', style: whiteFontedStyle(22)),
           backgroundColor: personColor),
@@ -61,7 +62,7 @@ class MainMenu extends ConsumerWidget {
             subtitleTextStyle:
                 colorlessFontedStyle(16, personSubtitleTextColor),
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const StartScreen(),
                 ),
@@ -82,7 +83,7 @@ class MainMenu extends ConsumerWidget {
             subtitleTextStyle:
                 colorlessFontedStyle(16, personSubtitleTextColor),
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const MainScreen(),
                 ),

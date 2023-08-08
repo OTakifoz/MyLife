@@ -1,76 +1,41 @@
 // ignore_for_file: unused_field, avoid_print
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_life/models/auth_sevice.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:my_life/models/pallette.dart';
+import 'package:my_life/models/user.dart';
+import 'package:my_life/providers/authentication_provider.dart';
 import 'package:my_life/widgets/authentication_screen/forgot_password_dialog.dart';
 
 final firebase = FirebaseAuth.instance;
 
-class AuthenticationScreen extends StatefulWidget {
+class AuthenticationScreen extends ConsumerStatefulWidget {
   const AuthenticationScreen({super.key});
 
   @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+  ConsumerState<AuthenticationScreen> createState() =>
+      _AuthenticationScreenState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> {
+class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
   void showResetPasswordDialog() {
     showDialog(
         context: context, builder: (context) => const ForgotPasswordDialog());
   }
 
   final formKey = GlobalKey<FormState>();
-  var _enteredEmail = '';
-  var _enteredPassword = '';
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   // ignore: prefer_final_fields
-  var _enteredUsername = '';
-
-  void _submit() async {
-    final isValid = formKey.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
-
-    if (isValid) {
-      formKey.currentState!.save();
-
-      try {
-        if (_isLogin) {
-          await firebase.signInWithEmailAndPassword(
-              email: _enteredEmail.trimRight(),
-              password: _enteredPassword.trimRight());
-        } else {
-          final userCredentials = await firebase.createUserWithEmailAndPassword(
-              email: _enteredEmail.trimRight(),
-              password: _enteredPassword.trimRight());
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userCredentials.user!.uid)
-              .set({
-            'username': _enteredUsername,
-            'email': _enteredEmail,
-          });
-        }
-      } on FirebaseAuthException catch (error) {
-        if (error.code == 'email-already-in-use') {}
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message ?? 'Authentication failed'),
-          ),
-        );
-      }
-    }
-  }
 
   bool isChecked = false;
   var _isLogin = true;
   var passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final authProvider = ref.watch(authenticationProvider);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -99,6 +64,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
+                              controller: emailController,
                               style: whiteFontedStyle(16),
                               cursorColor: Colors.white,
                               autocorrect: false,
@@ -134,7 +100,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   labelText: 'Email',
                                   labelStyle: whiteFontedStyle(16)),
                               onSaved: (newValue) {
-                                _enteredEmail = newValue!;
+                                emailController.text = newValue!;
                               },
                               validator: (value) {
                                 if (value == null ||
@@ -153,6 +119,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               Column(
                                 children: [
                                   TextFormField(
+                                    controller: usernameController,
                                     style: whiteFontedStyle(16),
                                     cursorColor: Colors.white,
                                     autocorrect: false,
@@ -191,7 +158,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                         labelText: 'Username',
                                         labelStyle: whiteFontedStyle(16)),
                                     onSaved: (newValue) {
-                                      _enteredUsername = newValue!;
+                                      usernameController.text = newValue!;
                                     },
                                     validator: (value) {
                                       if (value == null ||
@@ -231,7 +198,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   labelText: 'Password',
                                   labelStyle: whiteFontedStyle(16)),
                               onSaved: (newValue) {
-                                _enteredPassword = newValue!;
+                                passwordController.text = newValue!;
                               },
                               validator: (value) {
                                 if (value == null ||
@@ -281,9 +248,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                                     color: Colors.white)),
                                             labelText: 'Confirm Password',
                                             labelStyle: whiteFontedStyle(16)),
-                                        onSaved: (newValue) {
-                                          _enteredPassword = newValue!;
-                                        },
                                         validator: (value) {
                                           if (passwordController.text !=
                                               value) {
@@ -343,7 +307,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                         fixedSize: const Size.fromHeight(55),
                                         backgroundColor: Colors.green[300]),
                                     onPressed: () {
-                                      _submit();
+                                      authProvider.submitUserData(
+                                          emailController.text,
+                                          usernameController.text,
+                                          _isLogin
+                                              ? AuthMode.login
+                                              : AuthMode.signup,
+                                          passwordController.text);
+                                      authProvider.signWithEmailAndPassword();
                                     },
                                     child: Text(_isLogin ? 'Log In' : 'Sign Up',
                                         style: whiteFontedStyle(16)),
@@ -363,7 +334,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      AuthService().signInWithGoogle();
+                                      authProvider.signInWithGoogle();
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.green[300],

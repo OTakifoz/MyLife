@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class LifeNotifier extends ChangeNotifier {
   Person? person;
 
-  // Let's allow t
   void updatePerson(Person newPerson) {
     person = newPerson;
     notifyListeners();
