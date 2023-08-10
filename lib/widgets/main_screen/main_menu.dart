@@ -1,14 +1,17 @@
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// ignore: unused_import
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
-import 'package:my_life/widgets/main_screen/main_screen.dart';
+import 'package:my_life/widgets/main_screen/view_lives_screen.dart';
+
 import 'package:my_life/widgets/start_screen/start_screen.dart';
 
-import '../../models/person.dart';
+import '../../models/life.dart';
+import '../../providers/firebase_provider.dart';
 
 class MainMenu extends ConsumerWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -16,9 +19,10 @@ class MainMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final person = ref.watch(lifeProvider);
+    final firebase = ref.watch(firebaseProvider);
 
     // ignore: no_leading_underscores_for_local_identifiers
-    Gender? _gender = person.person!.gender;
+    Gender? _gender = person.life!.gender;
 
     Color? personColor =
         _gender == Gender.male ? Colors.blue[700] : Colors.pink[700];
@@ -34,7 +38,7 @@ class MainMenu extends ConsumerWidget {
           .collection('users')
           .doc(user.uid)
           .get();
-      // ignore: use_build_context_synchronously
+
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -83,16 +87,17 @@ class MainMenu extends ConsumerWidget {
             subtitleTextStyle:
                 colorlessFontedStyle(16, personSubtitleTextColor),
             onTap: () {
+              firebase.fetchUserLives();
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const MainScreen(),
+                  builder: (context) => const LivesScreen(),
                 ),
               );
             },
-            subtitle: const Text('Go to your latest life'),
+            subtitle: const Text('Switch between your lives'),
             title: const Text(
               textAlign: TextAlign.start,
-              'Life',
+              'Lives',
             ),
           ),
           ListTile(

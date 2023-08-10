@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
-import '../../models/person.dart';
+import '../../models/life.dart';
 
 class PropertyChart extends ConsumerWidget {
   const PropertyChart({super.key});
@@ -16,11 +16,11 @@ class PropertyChart extends ConsumerWidget {
 
     Color? healthBarColor;
 
-    var _health = person.person!.health;
-    var _happiness = person.person!.happiness;
-    var _appearence = person.person!.appearence;
-    var _intelligence = person.person!.intelligence;
-    var _gender = person.person!.gender;
+    var _health = person.life!.health;
+    var _happiness = person.life!.happiness;
+    var _appearence = person.life!.appearence;
+    var _intelligence = person.life!.intelligence;
+    var _gender = person.life!.gender;
 
     if (_health > 70) {
       healthBarColor = Colors.green;

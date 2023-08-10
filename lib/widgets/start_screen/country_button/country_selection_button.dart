@@ -39,8 +39,8 @@ class _CountrySelectionWidgetState
             },
             style: ElevatedButton.styleFrom(
               fixedSize: Size.fromWidth(screenWidth - 32),
-              backgroundColor: startScreen.person.currentCountry != null
-                  ? startScreen.person.currentCountry!.countryColor
+              backgroundColor: startScreen.life.currentCountry != null
+                  ? startScreen.life.currentCountry!.countryColor
                   : Colors.grey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),

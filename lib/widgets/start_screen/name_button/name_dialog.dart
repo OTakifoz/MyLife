@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/start_screen_provider.dart';
-import '../../../models/person.dart';
+import '../../../models/life.dart';
 
 class NameDialog extends ConsumerStatefulWidget {
   const NameDialog({super.key});
@@ -26,7 +26,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
             width: 2,
             color: Colors.white,
           )),
-      backgroundColor: startScreen.person.gender == Gender.male
+      backgroundColor: startScreen.life.gender == Gender.male
           ? Colors.blue[700]!
           : Colors.pink[700]!,
       title: Text('Type in a name', style: whiteBoldFontedStyle(20)),

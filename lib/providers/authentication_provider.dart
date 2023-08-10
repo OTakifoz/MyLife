@@ -11,9 +11,14 @@ enum SignInMethod { emailAndPassword, google }
 
 class AuthenticationNotifier extends ChangeNotifier {
   final UserModel userModel = UserModel(
-      email: null, username: null, authMode: AuthMode.login, password: null);
+    email: null,
+    username: null,
+    authMode: AuthMode.login,
+    password: null,
+    lives: [],
+  );
   final firebase = FirebaseAuth.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  User? currentUser = FirebaseAuth.instance.currentUser;
   SignInMethod method = SignInMethod.emailAndPassword;
 
   void signInWithGoogle() async {
@@ -29,7 +34,7 @@ class AuthenticationNotifier extends ChangeNotifier {
     method = SignInMethod.google;
     await FirebaseAuth.instance.signInWithCredential(credential);
     notifyListeners();
-    storeUserData(FirebaseAuth.instance.currentUser!);
+    storeUserAuthenticationData(FirebaseAuth.instance.currentUser!);
   }
 
   void signWithEmailAndPassword() async {
@@ -44,7 +49,7 @@ class AuthenticationNotifier extends ChangeNotifier {
             email: userModel.email!.trimRight(),
             password: userModel.password!.trimRight());
         notifyListeners();
-        storeUserData(FirebaseAuth.instance.currentUser!);
+        storeUserAuthenticationData(FirebaseAuth.instance.currentUser!);
       }
     } on FirebaseAuthException catch (error) {
       // ignore: avoid_print
@@ -52,12 +57,13 @@ class AuthenticationNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> storeUserData(User user) async {
+  Future<void> storeUserAuthenticationData(User user) async {
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'username': (method == SignInMethod.emailAndPassword)
           ? userModel.username
           : user.displayName,
       'email': user.email,
+      'lives': userModel.lives,
     });
   }
 

@@ -10,8 +10,8 @@ class CountrySelectionButtonChild extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final startScreen = ref.watch(startScreenProvider);
-    if (startScreen.person.currentCountry != null) {
-      return Text(startScreen.person.currentCountry!.name,
+    if (startScreen.life.currentCountry != null) {
+      return Text(startScreen.life.currentCountry!.name,
           style: whiteFontedStyle(20));
     } else {
       return Text('Select a Country', style: whiteFontedStyle(20));

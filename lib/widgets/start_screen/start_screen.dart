@@ -5,10 +5,11 @@ import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button.dart';
 import 'package:my_life/widgets/main_screen/main_screen.dart';
 import 'package:my_life/providers/start_screen_provider.dart';
-import 'package:my_life/models/person.dart';
+import 'package:my_life/models/life.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_button.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../../providers/firebase_provider.dart';
 import '../main_screen/main_menu.dart';
 
 class StartScreen extends ConsumerStatefulWidget {
@@ -48,6 +49,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
 
     final startScreen = ref.watch(startScreenProvider);
     final newLife = ref.watch(lifeProvider);
+    final firebase = ref.watch(firebaseProvider);
 
     return Scaffold(
       body: Container(
@@ -67,7 +69,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                   height: screenHeight * 0.2,
                   child: Row(
                     children: [
-                      if (newLife.person != null)
+                      if (newLife.life != null)
                         IconButton(
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
@@ -88,27 +90,30 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          if (startScreen.person.name == null &&
-                              startScreen.person.lastName == null &&
-                              startScreen.person.currentCountry != null) {
+                          if (startScreen.life.name == null &&
+                              startScreen.life.lastName == null &&
+                              startScreen.life.currentCountry != null) {
                             showErrorDialog(
                                 'Please enter a name and a last name');
                           }
-                          if (startScreen.person.name == null &&
-                              startScreen.person.lastName == null &&
-                              startScreen.person.currentCountry == null) {
+                          if (startScreen.life.name == null &&
+                              startScreen.life.lastName == null &&
+                              startScreen.life.currentCountry == null) {
                             showErrorDialog(
                                 'Please enter a name and a last name, and select a country');
                           }
-                          if (startScreen.person.currentCountry == null &&
-                              startScreen.person.name != null &&
-                              startScreen.person.lastName != null) {
+                          if (startScreen.life.currentCountry == null &&
+                              startScreen.life.name != null &&
+                              startScreen.life.lastName != null) {
                             showErrorDialog('Please select a country');
                           }
-                          if (startScreen.person.name != null &&
-                              startScreen.person.lastName != null &&
-                              startScreen.person.currentCountry != null) {
-                            newLife.person = startScreen.person.copy();
+                          if (startScreen.life.name != null &&
+                              startScreen.life.lastName != null &&
+                              startScreen.life.currentCountry != null) {
+                            startScreen.updateUuid();
+                            newLife.life = startScreen.life.copy();
+                            firebase.storeLifeData(newLife.life!);
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const MainScreen(),

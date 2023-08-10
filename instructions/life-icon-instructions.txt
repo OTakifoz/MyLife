@@ -1,0 +1,34 @@
+skin_colors = (
+white - fbe1be
+light - f5c39e
+medium - e29d74
+brown - ba6c3c
+dark - 904b22
+very_dark - 5a2c0a
+)
+hair_colors = (
+brown - 603814
+red - fb812e
+blonde - f6d47d
+black - 000000
+)
+age_range = (
+0-5 - baby
+6-12 - child
+13-19 - teenager
+20-28 - young_adult
+29-37 - adult
+38-45 - middle_aged
+46-55 - late_adult
+56-65 - old
+65-100 - senior
+)
+gender(
+male
+female
+)
+file name will be in this format
+%gender%-%skin_color%-%hair_color%-%age_range%.png
+example:
+male-white-brown-baby.png
+female-very_dark-brown-young_adult.png
