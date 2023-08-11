@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/models/life.dart';
 import 'package:my_life/providers/life_provider.dart';
-import 'package:my_life/widgets/main_screen/action_bar.dart';
-import 'package:my_life/widgets/main_screen/main_menu.dart';
-import 'package:my_life/widgets/main_screen/property_chart.dart';
+import 'package:my_life/widgets/main_screen/main_screen_widgets/action_bar.dart';
+import 'package:my_life/widgets/main_screen/main_menu/main_menu.dart';
+import 'package:my_life/widgets/main_screen/main_screen_widgets/property_chart.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});

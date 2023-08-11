@@ -20,33 +20,41 @@ class LifeNotifier extends ChangeNotifier {
   void updateCurrentCountry(Country country) {
     life!.currentCountry = country;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
-        .set({'currentCountry': country});
+        .update({'currentCountry': country});
     notifyListeners();
   }
 
   void updateName(String name) {
     life!.name = name;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
-        .update({'name': life!.name});
+        .update({'name': name});
     notifyListeners();
   }
 
   void updateLastName(String lastName) {
     life!.lastName = lastName;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
-        .update({'lastName': life!.lastName});
+        .update({'lastName': lastName});
     notifyListeners();
   }
 
   void updateGender(Gender gender) {
     life!.gender = gender;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
         .update({'gender': life!.gender.toString()});
@@ -56,6 +64,8 @@ class LifeNotifier extends ChangeNotifier {
   void updateHealth(int health) {
     life!.health = health;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
         .update({'health': life!.health});
@@ -66,6 +76,8 @@ class LifeNotifier extends ChangeNotifier {
     if (life!.health + increment <= 100 && life!.health + increment >= 0) {
       life!.health = life!.health + increment;
       FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
           .collection('lives')
           .doc(life!.uid)
           .update({'health': life!.health});
@@ -78,6 +90,8 @@ class LifeNotifier extends ChangeNotifier {
         life!.happiness + increment >= 0) {
       life!.happiness = life!.happiness + increment;
       FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
           .collection('lives')
           .doc(life!.uid)
           .update({'happiness': life!.happiness});
@@ -90,6 +104,8 @@ class LifeNotifier extends ChangeNotifier {
         life!.appearence + increment >= 0) {
       life!.appearence = life!.appearence + increment;
       FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
           .collection('lives')
           .doc(life!.uid)
           .update({'appearence': life!.appearence});
@@ -102,6 +118,8 @@ class LifeNotifier extends ChangeNotifier {
         life!.intelligence + increment >= 0) {
       life!.intelligence = life!.intelligence + increment;
       FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
           .collection('lives')
           .doc(life!.uid)
           .update({'intelligence': life!.intelligence});
@@ -112,6 +130,8 @@ class LifeNotifier extends ChangeNotifier {
   void updateHappiness(int happiness) {
     life!.happiness = happiness;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
         .update({'happiness': life!.happiness});
@@ -121,6 +141,8 @@ class LifeNotifier extends ChangeNotifier {
   void updateAppearence(int appearence) {
     life!.appearence = appearence;
     FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
         .collection('lives')
         .doc(life!.uid)
         .update({'appearence': life!.appearence});

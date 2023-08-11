@@ -10,7 +10,7 @@ import 'package:my_life/widgets/start_screen/name_button/name_button.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../providers/firebase_provider.dart';
-import '../main_screen/main_menu.dart';
+import '../main_screen/main_menu/main_menu.dart';
 
 class StartScreen extends ConsumerStatefulWidget {
   const StartScreen({super.key});

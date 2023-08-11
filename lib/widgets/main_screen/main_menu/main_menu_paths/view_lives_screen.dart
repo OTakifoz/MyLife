@@ -6,17 +6,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/firebase_provider.dart';
 import 'package:my_life/providers/life_provider.dart';
+import 'package:my_life/widgets/main_screen/main_screen.dart';
 
-import '../../models/life.dart';
+import '../../../../models/life.dart';
 
-class LivesScreen extends ConsumerWidget {
+class LivesScreen extends ConsumerStatefulWidget {
   const LivesScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LivesScreen> createState() => _LivesScreenState();
+}
+
+class _LivesScreenState extends ConsumerState<LivesScreen> {
+  @override
+  @override
+  Widget build(BuildContext context) {
     final _lifeProvider = ref.watch(lifeProvider);
     final _firebaseProvider = ref.watch(firebaseProvider);
-    final lives = _firebaseProvider.userLives;
+    List lives = _firebaseProvider.userLives;
 
     Gender? _gender = _lifeProvider.life!.gender;
 
@@ -32,18 +39,30 @@ class LivesScreen extends ConsumerWidget {
       backgroundColor:
           _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
       appBar: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: Text('Previous Lives', style: whiteFontedStyle(22)),
           backgroundColor: personColor),
       body: ListView.builder(
         itemCount: lives.length,
         itemBuilder: (BuildContext context, int index) {
+          Life activeLife = lives[index];
           return ListTile(
-              title: Text(lives[index].name!),
+              title: Text(
+                '${activeLife.name!} ${activeLife.lastName!}',
+                style: colorlessFontedStyle(20, personTitleTextColor),
+              ),
               onTap: () {
                 _lifeProvider.changeLives(lives[index]);
-                Navigator.pop(context);
+
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MainScreen(),
+                  ),
+                );
+                setState(() {
+                  lives = [];
+                });
               });
         },
       ),

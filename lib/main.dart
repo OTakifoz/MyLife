@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/main_screen_builder.dart';
+import 'package:my_life/widgets/main_screen/main_screen_builder/main_screen_builder.dart';
 import 'package:my_life/widgets/authentication_screen/firebase_options.dart';
 import 'package:my_life/widgets/authentication_screen/splash_screen.dart';
 import 'package:my_life/widgets/authentication_screen/authentication_screen.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
-import '../../models/life.dart';
+import '../../../models/life.dart';
 
 class PropertyChart extends ConsumerWidget {
   const PropertyChart({super.key});

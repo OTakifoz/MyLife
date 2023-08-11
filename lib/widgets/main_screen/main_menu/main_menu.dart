@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
-import 'package:my_life/widgets/main_screen/view_lives_screen.dart';
+import 'package:my_life/widgets/main_screen/main_menu/main_menu_paths/view_lives_screen.dart';
 
 import 'package:my_life/widgets/start_screen/start_screen.dart';
 
-import '../../models/life.dart';
-import '../../providers/firebase_provider.dart';
+import '../../../models/life.dart';
+import '../../../providers/firebase_provider.dart';
 
 class MainMenu extends ConsumerWidget {
   const MainMenu({Key? key}) : super(key: key);

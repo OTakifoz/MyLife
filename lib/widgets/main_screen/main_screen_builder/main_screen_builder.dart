@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/main_screen.dart';
+import 'package:my_life/widgets/main_screen/main_screen_builder/loading_screen.dart';
 
-import 'models/life.dart';
+import '../../../models/life.dart';
 
 class MainScreenBuilder extends ConsumerStatefulWidget {
   const MainScreenBuilder({super.key});
@@ -20,20 +21,28 @@ class _MainScreenBuilderState extends ConsumerState<MainScreenBuilder> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    List<Life> userLives = [];
+
     final _lifeProvider = ref.watch(lifeProvider);
 
     Future<bool> ensureLifeIsInitialized() async {
-      final storedLives = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user!.uid)
-          .collection('lives')
-          .get();
-      for (final storedLife in storedLives.docs) {
-        userLives.add(Life.fromMap(storedLife.data()));
-      }
-      _lifeProvider.changeLives(userLives[0]);
-      await Future.delayed(const Duration(seconds: 5));
+      // Simulate an asynchronous delay using a Future.delayed() call
+      await Future.delayed(const Duration(seconds: 5), () async {
+        final storedLives = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .collection('lives')
+            .get();
+
+        List<Life> userLives = []; // Initialize the userLives list here
+
+        for (final storedLife in storedLives.docs) {
+          userLives.add(Life.fromMap(storedLife.data()));
+        }
+
+        if (userLives.isNotEmpty) {
+          _lifeProvider.changeLives(userLives[0]);
+        }
+      });
 
       return true;
     }
@@ -63,22 +72,15 @@ class _MainScreenBuilderState extends ConsumerState<MainScreenBuilder> {
             ),
           ];
         } else {
-          children = const <Widget>[
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: CircularProgressIndicator(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
-            ),
-          ];
+          children = const [LoadingScreen()];
         }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
+        return Container(
+          decoration: BoxDecoration(color: Colors.green[100]),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
           ),
         );
       },

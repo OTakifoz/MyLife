@@ -20,6 +20,7 @@ class FirebaseNotifier extends ChangeNotifier {
   }
 
   Future<void> fetchUserLives() async {
+    userLives = [];
     final storedLives = await FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
