@@ -145,7 +145,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                     ]),
                   ),
                   const SizedBox(height: 16),
-                  const NameButton(),
+                  const CountrySelectionButton(),
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 60,
@@ -186,7 +186,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const CountrySelectionButton(),
+                  const NameButton(),
                   const SizedBox(height: 16),
                 ],
               ),

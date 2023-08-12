@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_button_child.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_dialog.dart';
-import 'dart:math';
-import '../../../lists/name_list.dart';
+import 'package:random_name_generator/random_name_generator.dart';
+
 import '../../../models/life.dart';
 import '../../../providers/start_screen_provider.dart';
 
@@ -21,8 +21,6 @@ class _NameButtonState extends ConsumerState<NameButton> {
 
   @override
   Widget build(BuildContext context) {
-    final randomName = Random();
-    final randomLastName = Random();
     final startScreen = ref.watch(startScreenProvider);
     return SizedBox(
       height: 60,
@@ -53,12 +51,17 @@ class _NameButtonState extends ConsumerState<NameButton> {
                 IconButton(
                     iconSize: 32,
                     onPressed: () {
-                      startScreen.updateName(
-                        names[randomName.nextInt(lastnames.length)],
-                      );
-                      startScreen.updateLastName(
-                        names[randomLastName.nextInt(lastnames.length)],
-                      );
+                      var randomNames = RandomNames(
+                          startScreen.life.currentCountry != null
+                              ? startScreen.life.currentCountry!.zone
+                              : Zone.us);
+                      if (startScreen.life.gender == Gender.male) {
+                        startScreen.updateName(randomNames.manName());
+                      } else if (startScreen.life.gender == Gender.female) {
+                        startScreen.updateName(randomNames.womanName());
+                      }
+
+                      startScreen.updateLastName(randomNames.surname());
                     },
                     icon: const Icon(Icons.autorenew))
               ],
