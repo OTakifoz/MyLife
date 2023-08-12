@@ -6,12 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/pallette.dart';
 import 'package:my_life/providers/firebase_provider.dart';
 import 'package:my_life/providers/life_provider.dart';
+
 import 'package:my_life/widgets/main_screen/main_screen.dart';
 
 import '../../../../models/life.dart';
 
 class LivesScreen extends ConsumerStatefulWidget {
-  const LivesScreen({Key? key}) : super(key: key);
+  const LivesScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   ConsumerState<LivesScreen> createState() => _LivesScreenState();
@@ -39,7 +42,13 @@ class _LivesScreenState extends ConsumerState<LivesScreen> {
       backgroundColor:
           _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
       appBar: AppBar(
-          automaticallyImplyLeading: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back, weight: 100),
+          ),
+          automaticallyImplyLeading: false,
           toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: Text('Previous Lives', style: whiteFontedStyle(22)),
           backgroundColor: personColor),

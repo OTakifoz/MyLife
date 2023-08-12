@@ -34,7 +34,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               Icons.menu,
             ),
             onPressed: () {
-              Navigator.of(context).pushReplacement(
+              Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const MainMenu(),
                 ),

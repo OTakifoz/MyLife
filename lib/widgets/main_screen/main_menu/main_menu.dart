@@ -14,7 +14,9 @@ import '../../../models/life.dart';
 import '../../../providers/firebase_provider.dart';
 
 class MainMenu extends ConsumerWidget {
-  const MainMenu({Key? key}) : super(key: key);
+  const MainMenu({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,6 +53,12 @@ class MainMenu extends ConsumerWidget {
       backgroundColor:
           _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
       appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back, weight: 100),
+          ),
           automaticallyImplyLeading: false,
           toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: Text('Main Menu', style: whiteFontedStyle(22)),
