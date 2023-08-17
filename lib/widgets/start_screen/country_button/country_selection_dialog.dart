@@ -3,7 +3,7 @@
 import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import '../../../lists/countries_list.dart';
 import '../../../providers/start_screen_provider.dart';
 
@@ -54,6 +54,7 @@ class _CountrySelectionDialogState
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                               side: const BorderSide(
+                                width: 2.5,
                                 color: Colors.white,
                               )),
                         ),
@@ -61,9 +62,7 @@ class _CountrySelectionDialogState
                             width: double.maxFinite,
                             child: Center(child: Text(country.name))),
                         onPressed: () {
-                          startScreen.updateCurrentCountry(country);
-                          startScreen.updateHealth(country.baseHealth);
-                          startScreen.updateHappiness(country.baseHappiness);
+                          startScreen.chooseCountry(country);
                           Navigator.pop(context);
                         },
                       ),

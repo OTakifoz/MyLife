@@ -1,25 +1,26 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:my_life/lists/countries_list.dart';
-import 'package:my_life/models/model_base.dart';
+import 'package:my_life/references/model_base.dart';
 
 import 'country.dart';
+import 'background.dart';
 
 enum Gender { male, female }
 
 class Life extends ModelBase {
-  Life({
-    required this.age,
-    required this.gender,
-    required this.happiness,
-    required this.health,
-    required this.intelligence,
-    required this.appearence,
-    required this.lastName,
-    required this.name,
-    required this.currentCountry,
-    required this.uid,
-  });
+  Life(
+      {required this.age,
+      required this.gender,
+      required this.happiness,
+      required this.health,
+      required this.intelligence,
+      required this.appearence,
+      required this.lastName,
+      required this.name,
+      required this.currentCountry,
+      required this.uid,
+      required this.background});
   int? age;
   Gender? gender;
   dynamic happiness;
@@ -30,6 +31,7 @@ class Life extends ModelBase {
   String? lastName;
   Country? currentCountry;
   String? uid;
+  Background? background;
 
   Life copy() {
     return Life(
@@ -42,7 +44,8 @@ class Life extends ModelBase {
         lastName: lastName,
         name: name,
         currentCountry: currentCountry,
-        uid: uid);
+        uid: uid,
+        background: background);
   }
 
   @override
@@ -58,6 +61,7 @@ class Life extends ModelBase {
       'name': name,
       'currentCountry': currentCountry!.name,
       'uid': uid,
+      'background': background!.toMap(),
     }
       ..addAll(super.toMap())
       ..removeWhere((key, value) => value == null);
@@ -85,5 +89,8 @@ class Life extends ModelBase {
     name = data['name'];
     currentCountry = country;
     uid = data['uid'];
+    if (data['background'] != null) {
+      background = Background.fromMap(data['background']);
+    }
   }
 }

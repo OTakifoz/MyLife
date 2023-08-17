@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/main_menu/main_menu_paths/view_lives_screen.dart';
+import 'package:my_life/widgets/main_screen/main_screen.dart';
 
 import 'package:my_life/widgets/start_screen/start_screen.dart';
 
@@ -65,6 +66,28 @@ class MainMenu extends ConsumerWidget {
           backgroundColor: personColor),
       body: ListView(
         children: [
+          ListTile(
+            leading: SizedBox(
+                width: 60,
+                height: 48,
+                child: Image.asset('assets/icons/baby-icon.png')),
+            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
+            subtitleTextStyle:
+                colorlessFontedStyle(16, personSubtitleTextColor),
+            onTap: () {
+              firebase.fetchUserLives();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const MainScreen(),
+                ),
+              );
+            },
+            subtitle: const Text('Continue your latest life'),
+            title: const Text(
+              textAlign: TextAlign.start,
+              'Continue Life',
+            ),
+          ),
           ListTile(
             leading: SizedBox(
                 width: 60,

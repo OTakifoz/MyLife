@@ -25,8 +25,8 @@ class _MainScreenBuilderState extends ConsumerState<MainBuilder> {
   Future<bool> initializeInformation() async {
     await Future.delayed(const Duration(seconds: 5), () async {
       final _lifeProvider = ref.watch(lifeProvider);
-      List<Life> userLives = []; // Initialize the userLives list here
-      //Check for user information
+      List<Life> userLives = [];
+
       final storedLives = await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
@@ -47,10 +47,11 @@ class _MainScreenBuilderState extends ConsumerState<MainBuilder> {
     return true;
   }
 
+  late Future<bool> initializeInfo = initializeInformation();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-      future: initializeInformation(),
+      future: initializeInfo,
       builder: (context, snapshot) {
         Widget child;
         if (snapshot.hasData && userHasLives) {

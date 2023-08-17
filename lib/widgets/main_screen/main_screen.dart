@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import 'package:my_life/models/life.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/main_screen_widgets/action_bar.dart';
@@ -58,8 +58,18 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               color:
                   _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
             ),
-            child: const Column(
-              children: [Spacer(), ActionBar(), PropertyChart()],
+            child: Column(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(_lifeProvider.life!.background!.father!.name!)
+                  ],
+                ),
+                const Spacer(),
+                const ActionBar(),
+                const PropertyChart(),
+              ],
             ),
           ),
         ),

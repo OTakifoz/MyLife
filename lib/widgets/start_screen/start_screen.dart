@@ -1,13 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/models/background.dart';
+import 'package:my_life/references/pallette.dart';
+import 'package:my_life/models/relation.dart';
 import 'package:my_life/providers/life_provider.dart';
+import 'package:my_life/references/random_generators.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button.dart';
 import 'package:my_life/widgets/main_screen/main_screen.dart';
 import 'package:my_life/providers/start_screen_provider.dart';
 import 'package:my_life/models/life.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_button.dart';
+import 'package:random_name_generator/random_name_generator.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../providers/firebase_provider.dart';
 import '../main_screen/main_menu/main_menu.dart';
@@ -46,10 +53,108 @@ class _StartScreenState extends ConsumerState<StartScreen> {
   ) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     final startScreen = ref.watch(startScreenProvider);
     final newLife = ref.watch(lifeProvider);
     final firebase = ref.watch(firebaseProvider);
+
+    void createRandomFamily() {
+      var randomNames = RandomNames(startScreen.life.currentCountry != null
+          ? startScreen.life.currentCountry!.zone
+          : Zone.us);
+      final familyName = startScreen.life.lastName;
+      final father = Relation(
+          age: randomMinMaxInteger(18, 45),
+          gender: Gender.male,
+          lastName: familyName,
+          name: randomNames.manName(),
+          uid: const Uuid().v4(),
+          closeness:
+              Closeness.values[Random().nextInt(Closeness.values.length - 1)],
+          opinion: randomMinMaxInteger(25, 75),
+          relationType: RelationType.father);
+      final mother = Relation(
+        age: randomMinMaxInteger(father.age! - 5, father.age! + 5),
+        gender: Gender.female,
+        opinion: randomMinMaxInteger(25, 75),
+        lastName: familyName,
+        name: randomNames.womanName(),
+        uid: const Uuid().v4(),
+        closeness: father.closeness != Closeness.blood
+            ? Closeness.blood
+            : Closeness.values[Random().nextInt(Closeness.values.length - 1)],
+        relationType: RelationType.mother,
+      );
+      final sibling1 = Relation(
+          age: randomMinMaxInteger(1, mother.age! - 17),
+          gender: Gender.male,
+          opinion: 50,
+          lastName: familyName,
+          name: randomNames.manName(),
+          uid: const Uuid().v4(),
+          closeness: Closeness.blood,
+          relationType: RelationType.brother);
+
+      startScreen.life.background = Background(
+        familyName: familyName,
+        father: father,
+        mother: mother,
+        sibling1: sibling1,
+        sibling2: null,
+        sibling3: null,
+      );
+    }
+
+    void getRandomValues() {
+      startScreen.updateUuid();
+      Random randomAppearence;
+      randomAppearence = Random();
+      int appearence = randomAppearence.nextInt(100);
+      startScreen.updateAppearence(appearence);
+      Random randomIntelligence;
+      randomIntelligence = Random();
+      int intelligence = randomIntelligence.nextInt(100);
+      startScreen.updateIntelligence(intelligence);
+      createRandomFamily();
+    }
+
+    bool checkNullableValues() {
+      bool? isValid;
+      if (startScreen.life.name == null &&
+          startScreen.life.lastName == null &&
+          startScreen.life.currentCountry != null) {
+        showErrorDialog('Please enter a name and a last name');
+        isValid = false;
+      } else if (startScreen.life.name == null &&
+          startScreen.life.lastName == null &&
+          startScreen.life.currentCountry == null) {
+        showErrorDialog(
+            'Please enter a name and a last name, and select a country');
+        isValid = false;
+      } else if (startScreen.life.currentCountry == null &&
+          startScreen.life.name != null &&
+          startScreen.life.lastName != null) {
+        showErrorDialog('Please select a country');
+        isValid = false;
+      } else if (startScreen.life.name != null &&
+          startScreen.life.lastName != null &&
+          startScreen.life.currentCountry != null) {
+        isValid = true;
+      }
+      return isValid!;
+    }
+
+    void startNewLife() {
+      if (checkNullableValues()) {
+        getRandomValues();
+        newLife.life = startScreen.life.copy();
+        firebase.storeLifeData(newLife.life!);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
+        );
+      }
+    }
 
     return SizedBox(
       height: screenHeight,
@@ -92,36 +197,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            if (startScreen.life.name == null &&
-                                startScreen.life.lastName == null &&
-                                startScreen.life.currentCountry != null) {
-                              showErrorDialog(
-                                  'Please enter a name and a last name');
-                            }
-                            if (startScreen.life.name == null &&
-                                startScreen.life.lastName == null &&
-                                startScreen.life.currentCountry == null) {
-                              showErrorDialog(
-                                  'Please enter a name and a last name, and select a country');
-                            }
-                            if (startScreen.life.currentCountry == null &&
-                                startScreen.life.name != null &&
-                                startScreen.life.lastName != null) {
-                              showErrorDialog('Please select a country');
-                            }
-                            if (startScreen.life.name != null &&
-                                startScreen.life.lastName != null &&
-                                startScreen.life.currentCountry != null) {
-                              startScreen.updateUuid();
-                              newLife.life = startScreen.life.copy();
-                              firebase.storeLifeData(newLife.life!);
-
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
-                                ),
-                              );
-                            }
+                            startNewLife();
                           },
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size.fromWidth(

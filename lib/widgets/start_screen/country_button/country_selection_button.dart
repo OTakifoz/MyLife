@@ -59,9 +59,7 @@ class _CountrySelectionWidgetState
                     onPressed: () {
                       var country =
                           countries[randomCountry.nextInt(countries.length)];
-                      startScreen.updateCurrentCountry(country);
-                      startScreen.updateHealth(country.baseHealth);
-                      startScreen.updateHappiness(country.baseHappiness);
+                      startScreen.chooseCountry(country);
                     },
                     icon: const Icon(Icons.autorenew))
               ],

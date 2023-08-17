@@ -1,4 +1,4 @@
-import 'package:my_life/models/model_base.dart';
+import 'package:my_life/references/model_base.dart';
 
 import 'life.dart';
 
@@ -38,9 +38,4 @@ class UserModel extends ModelBase {
       ..addAll(super.toMap())
       ..removeWhere((key, value) => value == null);
   }
-} 
-
-
-
-
-//}
+}

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import 'package:my_life/models/user.dart';
 import 'package:my_life/providers/authentication_provider.dart';
 import 'package:my_life/widgets/authentication_screen/forgot_password_dialog.dart';
@@ -58,6 +58,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Form(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         key: formKey,
                         //autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/models/country.dart';
@@ -7,20 +9,40 @@ import 'package:uuid/uuid.dart';
 
 class StartScreenNotifier extends ChangeNotifier {
   final life = Life(
-      age: 0,
-      gender: Gender.male,
-      happiness: null,
-      health: null,
-      intelligence: 75,
-      appearence: 75,
-      lastName: null,
-      name: null,
-      currentCountry: null,
-      uid: null);
+    age: 0,
+    gender: Gender.male,
+    happiness: null,
+    health: null,
+    intelligence: null,
+    appearence: null,
+    lastName: null,
+    name: null,
+    currentCountry: null,
+    uid: null,
+    background: null,
+  );
 
-  // Let's allow the UI to add todos.
+  void chooseCountry(Country? country) {
+    Random randomHappiness;
+    int minHappiness = country!.bottomHappiness;
+    int maxHappiness = country.topHappiness;
+    randomHappiness = Random();
+    int happiness =
+        minHappiness + randomHappiness.nextInt(maxHappiness - minHappiness);
+    life.happiness = happiness;
+    Random randomHealth;
+    int minHealth = country.bottomHealth;
+    int maxHealth = country.topHealth;
+    randomHealth = Random();
+    int health = minHealth + randomHealth.nextInt(maxHealth - minHealth);
+    life.health = health;
+    life.currentCountry = country;
+    notifyListeners();
+  }
+
   void updateCurrentCountry(Country? country) {
     life.currentCountry = country;
+
     notifyListeners();
   }
 
@@ -86,6 +108,11 @@ class StartScreenNotifier extends ChangeNotifier {
 
   void updateAppearence(int appearence) {
     life.appearence = appearence;
+    notifyListeners();
+  }
+
+  void updateIntelligence(int intelligence) {
+    life.intelligence = intelligence;
     notifyListeners();
   }
 }

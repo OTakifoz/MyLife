@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import 'package:my_life/providers/firebase_provider.dart';
 import 'package:my_life/providers/life_provider.dart';
 

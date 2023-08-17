@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 
 import '../../../providers/start_screen_provider.dart';
 

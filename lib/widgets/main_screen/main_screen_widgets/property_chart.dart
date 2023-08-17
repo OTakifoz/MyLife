@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/pallette.dart';
+import 'package:my_life/references/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
 import '../../../models/life.dart';
 
@@ -72,8 +72,8 @@ class PropertyChart extends ConsumerWidget {
     }
 
     const barHeight = 20.0;
-    var barWidth = (screenWidth - 60) * 0.60;
-    var textWidth = (screenWidth - 60) * 0.40;
+    var barWidth = (screenWidth - 30) * 0.60;
+    var textWidth = (screenWidth - 30) * 0.40;
 
     return SizedBox(
         height: MediaQuery.of(context).size.height * 0.25,
@@ -82,406 +82,378 @@ class PropertyChart extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: SizedBox(
-                        width: textWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              style: colorlessFontedStyle(
-                                16,
-                                _gender == Gender.male
-                                    ? Colors.blue[900]
-                                    : Colors.pink[900],
-                              ),
-                              'Health',
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                                height: barHeight,
-                                child:
-                                    Image.asset('assets/icons/heart-icon.png')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+              Row(
+                children: [
+                  SizedBox(
+                    width: textWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          style: colorlessFontedStyle(
+                            16,
+                            _gender == Gender.male
+                                ? Colors.blue[900]
+                                : Colors.pink[900],
+                          ),
+                          'Health',
                         ),
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                            height: barHeight,
+                            child: Image.asset('assets/icons/heart-icon.png')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    Container(
-                      width: barWidth,
-                      height: barHeight,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        color: Colors.white,
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: barWidth,
+                    height: barHeight,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                color: healthBarColor,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: healthBarColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
                               ),
-                              height: barHeight,
-                              width: barWidth * 0.01 * (_health),
-                              child: Row(
-                                children: [
-                                  const Spacer(),
-                                  _health >= 25
-                                      ? FittedBox(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              '$_health%',
-                                              style: colorlessFontedStyle(
-                                                16,
-                                                _gender == Gender.male
-                                                    ? Colors.blue[900]
-                                                    : Colors.pink[900],
-                                              ),
+                            ),
+                            height: barHeight,
+                            width: barWidth * 0.01 * (_health),
+                            child: Row(
+                              children: [
+                                const Spacer(),
+                                _health >= 25
+                                    ? FittedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Text(
+                                            '$_health%',
+                                            style: colorlessFontedStyle(
+                                              16,
+                                              _gender == Gender.male
+                                                  ? Colors.blue[900]
+                                                  : Colors.pink[900],
                                             ),
                                           ),
-                                        )
-                                      : const Spacer(),
-                                ],
-                              )),
-                          _health < 25
-                              ? FittedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      '$_appearence%',
-                                      style: colorlessFontedStyle(
-                                        16,
-                                        _gender == Gender.male
-                                            ? Colors.blue[900]
-                                            : Colors.pink[900],
-                                      ),
+                                        ),
+                                      )
+                                    : const Spacer(),
+                              ],
+                            )),
+                        _health < 25
+                            ? FittedBox(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    '$_appearence%',
+                                    style: colorlessFontedStyle(
+                                      16,
+                                      _gender == Gender.male
+                                          ? Colors.blue[900]
+                                          : Colors.pink[900],
                                     ),
                                   ),
-                                )
-                              : const Spacer(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                                ),
+                              )
+                            : const Spacer(),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: SizedBox(
-                        width: textWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              style: colorlessFontedStyle(
-                                16,
-                                _gender == Gender.male
-                                    ? Colors.blue[900]
-                                    : Colors.pink[900],
-                              ),
-                              'Happiness',
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                                height: barHeight,
-                                child:
-                                    Image.asset('assets/icons/happy-icon.png')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+              Row(
+                children: [
+                  SizedBox(
+                    width: textWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          style: colorlessFontedStyle(
+                            16,
+                            _gender == Gender.male
+                                ? Colors.blue[900]
+                                : Colors.pink[900],
+                          ),
+                          'Happiness',
                         ),
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                            height: barHeight,
+                            child: Image.asset('assets/icons/happy-icon.png')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    Container(
-                      width: barWidth,
-                      height: barHeight,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        color: Colors.white,
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: barWidth,
+                    height: barHeight,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                color: happinessBarColor,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: happinessBarColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
                               ),
-                              height: barHeight,
-                              width: barWidth * 0.01 * (_happiness),
-                              child: Row(
-                                children: [
-                                  const Spacer(),
-                                  _happiness >= 25
-                                      ? FittedBox(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              '$_happiness%',
-                                              style: colorlessFontedStyle(
-                                                16,
-                                                _gender == Gender.male
-                                                    ? Colors.blue[900]
-                                                    : Colors.pink[900],
-                                              ),
+                            ),
+                            height: barHeight,
+                            width: barWidth * 0.01 * (_happiness),
+                            child: Row(
+                              children: [
+                                const Spacer(),
+                                _happiness >= 25
+                                    ? FittedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Text(
+                                            '$_happiness%',
+                                            style: colorlessFontedStyle(
+                                              16,
+                                              _gender == Gender.male
+                                                  ? Colors.blue[900]
+                                                  : Colors.pink[900],
                                             ),
                                           ),
-                                        )
-                                      : const Spacer(),
-                                ],
-                              )),
-                          _happiness < 25
-                              ? FittedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      '$_appearence%',
-                                      style: colorlessFontedStyle(
-                                        16,
-                                        _gender == Gender.male
-                                            ? Colors.blue[900]
-                                            : Colors.pink[900],
-                                      ),
+                                        ),
+                                      )
+                                    : const Spacer(),
+                              ],
+                            )),
+                        _happiness < 25
+                            ? FittedBox(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    '$_appearence%',
+                                    style: colorlessFontedStyle(
+                                      16,
+                                      _gender == Gender.male
+                                          ? Colors.blue[900]
+                                          : Colors.pink[900],
                                     ),
                                   ),
-                                )
-                              : const Spacer(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                                ),
+                              )
+                            : const Spacer(),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: SizedBox(
-                        width: textWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              style: colorlessFontedStyle(
-                                16,
-                                _gender == Gender.male
-                                    ? Colors.blue[900]
-                                    : Colors.pink[900],
-                              ),
-                              'Looks',
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                                height: barHeight,
-                                child:
-                                    Image.asset('assets/icons/flame-icon.png')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+              Row(
+                children: [
+                  SizedBox(
+                    width: textWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          style: colorlessFontedStyle(
+                            16,
+                            _gender == Gender.male
+                                ? Colors.blue[900]
+                                : Colors.pink[900],
+                          ),
+                          'Looks',
                         ),
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                            height: barHeight,
+                            child: Image.asset('assets/icons/flame-icon.png')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    Container(
-                      width: barWidth,
-                      height: barHeight,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        color: Colors.white,
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: barWidth,
+                    height: barHeight,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                color: appearenceBarColor,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: appearenceBarColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
                               ),
-                              height: barHeight,
-                              width: barWidth * 0.01 * (_appearence),
-                              child: Row(
-                                children: [
-                                  const Spacer(),
-                                  _appearence >= 25
-                                      ? FittedBox(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              '$_appearence%',
-                                              style: colorlessFontedStyle(
-                                                16,
-                                                _gender == Gender.male
-                                                    ? Colors.blue[900]
-                                                    : Colors.pink[900],
-                                              ),
+                            ),
+                            height: barHeight,
+                            width: barWidth * 0.01 * (_appearence),
+                            child: Row(
+                              children: [
+                                const Spacer(),
+                                _appearence >= 25
+                                    ? FittedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Text(
+                                            '$_appearence%',
+                                            style: colorlessFontedStyle(
+                                              16,
+                                              _gender == Gender.male
+                                                  ? Colors.blue[900]
+                                                  : Colors.pink[900],
                                             ),
                                           ),
-                                        )
-                                      : const Spacer(),
-                                ],
-                              )),
-                          _appearence < 25
-                              ? FittedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      '$_appearence%',
-                                      style: colorlessFontedStyle(
-                                        16,
-                                        _gender == Gender.male
-                                            ? Colors.blue[900]
-                                            : Colors.pink[900],
-                                      ),
+                                        ),
+                                      )
+                                    : const Spacer(),
+                              ],
+                            )),
+                        _appearence < 25
+                            ? FittedBox(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    '$_appearence%',
+                                    style: colorlessFontedStyle(
+                                      16,
+                                      _gender == Gender.male
+                                          ? Colors.blue[900]
+                                          : Colors.pink[900],
                                     ),
                                   ),
-                                )
-                              : const Spacer(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                                ),
+                              )
+                            : const Spacer(),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: SizedBox(
-                        width: textWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              style: colorlessFontedStyle(
-                                16,
-                                _gender == Gender.male
-                                    ? Colors.blue[900]
-                                    : Colors.pink[900],
-                              ),
-                              'Smarts',
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                                height: barHeight,
-                                child:
-                                    Image.asset('assets/icons/brain-icon.png')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+              Row(
+                children: [
+                  SizedBox(
+                    width: textWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          style: colorlessFontedStyle(
+                            16,
+                            _gender == Gender.male
+                                ? Colors.blue[900]
+                                : Colors.pink[900],
+                          ),
+                          'Smarts',
                         ),
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                            height: barHeight,
+                            child: Image.asset('assets/icons/brain-icon.png')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    Container(
-                      width: barWidth,
-                      height: barHeight,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        color: Colors.white,
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: barWidth,
+                    height: barHeight,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                color: intelligenceBarColor,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: intelligenceBarColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
                               ),
-                              height: barHeight,
-                              width: barWidth * 0.01 * (_intelligence),
-                              child: Row(
-                                children: [
-                                  const Spacer(),
-                                  _intelligence >= 25
-                                      ? FittedBox(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              '$_intelligence%',
-                                              style: colorlessFontedStyle(
-                                                16,
-                                                _gender == Gender.male
-                                                    ? Colors.blue[900]
-                                                    : Colors.pink[900],
-                                              ),
+                            ),
+                            height: barHeight,
+                            width: barWidth * 0.01 * (_intelligence),
+                            child: Row(
+                              children: [
+                                const Spacer(),
+                                _intelligence >= 25
+                                    ? FittedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Text(
+                                            '$_intelligence%',
+                                            style: colorlessFontedStyle(
+                                              16,
+                                              _gender == Gender.male
+                                                  ? Colors.blue[900]
+                                                  : Colors.pink[900],
                                             ),
                                           ),
-                                        )
-                                      : const Spacer(),
-                                ],
-                              )),
-                          _intelligence < 25
-                              ? FittedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      '$_intelligence%',
-                                      style: colorlessFontedStyle(
-                                        16,
-                                        _gender == Gender.male
-                                            ? Colors.blue[900]
-                                            : Colors.pink[900],
-                                      ),
+                                        ),
+                                      )
+                                    : const Spacer(),
+                              ],
+                            )),
+                        _intelligence < 25
+                            ? FittedBox(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    '$_intelligence%',
+                                    style: colorlessFontedStyle(
+                                      16,
+                                      _gender == Gender.male
+                                          ? Colors.blue[900]
+                                          : Colors.pink[900],
                                     ),
                                   ),
-                                )
-                              : const Spacer(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                                ),
+                              )
+                            : const Spacer(),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ],
           ),
