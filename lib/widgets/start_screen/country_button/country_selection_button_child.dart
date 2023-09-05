@@ -12,9 +12,9 @@ class CountrySelectionButtonChild extends ConsumerWidget {
     final startScreen = ref.watch(startScreenProvider);
     if (startScreen.life.currentCountry != null) {
       return Text(startScreen.life.currentCountry!.name,
-          style: whiteFontedStyle(20));
+          style: whiteFontedStyle(20, context));
     } else {
-      return Text('Select a Country', style: whiteFontedStyle(20));
+      return Text('Select a Country', style: whiteFontedStyle(20, context));
     }
   }
 }

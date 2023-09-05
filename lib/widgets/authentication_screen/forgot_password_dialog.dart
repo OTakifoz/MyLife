@@ -33,7 +33,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordDialog> {
         backgroundColor: Colors.green[900],
         title: const Text(
             'Enter your email and we will send you a password reset link'),
-        titleTextStyle: whiteFontedStyle(20),
+        titleTextStyle: whiteFontedStyle(20, context),
         content: Text(error.toString()),
         actions: [
           Row(
@@ -47,7 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordDialog> {
                     },
                     child: Text(
                       'OK',
-                      style: whiteFontedStyle(20),
+                      style: whiteFontedStyle(20, context),
                     )),
               ),
             ],
@@ -72,11 +72,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordDialog> {
       backgroundColor: Colors.green[900],
       title: const Text(
           'Enter your email and we will send you a password reset link'),
-      titleTextStyle: whiteFontedStyle(20),
+      titleTextStyle: whiteFontedStyle(20, context),
       content: Form(
         child: TextFormField(
           controller: emailController,
-          style: whiteFontedStyle(16),
+          style: whiteFontedStyle(16, context),
           cursorColor: Colors.white,
           autocorrect: false,
           autofocus: true,
@@ -106,7 +106,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordDialog> {
                 ),
               ),
               labelText: 'Email',
-              labelStyle: whiteFontedStyle(16)),
+              labelStyle: whiteFontedStyle(16, context)),
           validator: (value) {
             if (value == null ||
                 value.trim().isEmpty ||
@@ -131,7 +131,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordDialog> {
                   },
                   child: Text(
                     'OK',
-                    style: whiteFontedStyle(20),
+                    style: whiteFontedStyle(20, context),
                   )),
             ),
           ],

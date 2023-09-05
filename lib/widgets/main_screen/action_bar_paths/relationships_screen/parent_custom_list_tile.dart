@@ -1,46 +1,21 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_life/references/extentions.dart';
 import 'package:my_life/references/pallette.dart';
 import 'package:my_life/models/relation.dart';
 import 'package:my_life/widgets/main_screen/action_bar_paths/relationships_screen/relation_details_screen.dart';
 
 import '../../../../models/life.dart';
 import '../../../../providers/life_provider.dart';
+import '../../../../references/frequently_used_variables.dart';
 
 class ParentRelationListTile extends ConsumerWidget {
-  final Relation relation;
+  final Relationship relation;
   const ParentRelationListTile({super.key, required this.relation});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Color? opinionBarColor;
-    if (relation.opinion > 50) {
-      opinionBarColor = Colors.green;
-    }
-    if (relation.opinion <= 50 && relation.opinion >= 20) {
-      opinionBarColor = Colors.yellow;
-    }
-    if (relation.opinion < 20 && relation.opinion >= 10) {
-      opinionBarColor = Colors.orange;
-    }
-    if (relation.opinion < 10) {
-      opinionBarColor = Colors.red;
-    }
-
-    String? relationName;
-
-    if (relation.relationType == RelationType.mother) {
-      relationName = 'Mother';
-    } else if (relation.relationType == RelationType.father) {
-      relationName = 'Father';
-    } else if (relation.relationType == RelationType.brother) {
-      relationName = 'Brother';
-    } else if (relation.relationType == RelationType.sister) {
-      relationName = 'Sister';
-    }
-
     // ignore: unused_local_variable
     final _lifeProvider = ref.watch(lifeProvider);
     Gender? gender = _lifeProvider.life!.gender;
@@ -60,7 +35,8 @@ class ParentRelationListTile extends ConsumerWidget {
         width: screenWidth,
         decoration: const BoxDecoration(color: Colors.transparent),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('${relation.name!} ${relation.lastName!}($relationName)',
+          Text(
+              '${relation.name!} ${relation.lastName!}(${relationName(relation).toLowerCase().capitalize()})',
               style: colorlessFontedStyle(20, genderTitleColor)),
           Padding(
             padding: const EdgeInsets.only(top: 5),
@@ -76,12 +52,12 @@ class ParentRelationListTile extends ConsumerWidget {
                     alignment: Alignment.centerLeft,
                     children: [
                       Container(
-                        color: Colors.white,
+                        color: Colors.grey[200],
                         height: 10,
                         width: screenWidth * 0.5,
                       ),
                       Container(
-                        color: opinionBarColor,
+                        color: propertyBasedBarColor(relation.opinion),
                         height: 10,
                         width: screenWidth * 0.5 * relation.opinion * 0.01,
                       ),

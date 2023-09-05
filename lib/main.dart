@@ -16,6 +16,7 @@ void main() async {
   runApp(
     ProviderScope(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: ((context, snapshot) {

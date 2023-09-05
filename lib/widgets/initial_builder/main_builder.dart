@@ -23,7 +23,7 @@ class _MainScreenBuilderState extends ConsumerState<MainBuilder> {
   bool userHasLives = false;
 
   Future<bool> initializeInformation() async {
-    await Future.delayed(const Duration(seconds: 5), () async {
+    await Future.delayed(const Duration(milliseconds: 7500), () async {
       final _lifeProvider = ref.watch(lifeProvider);
       List<Life> userLives = [];
 

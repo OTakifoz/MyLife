@@ -29,7 +29,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
       backgroundColor: startScreen.life.gender == Gender.male
           ? Colors.blue[700]!
           : Colors.pink[700]!,
-      title: Text('Type in a name', style: whiteBoldFontedStyle(20)),
+      title: Text('Type in a name', style: whiteBoldFontedStyle(20, context)),
       content: Form(
         key: formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -39,7 +39,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
             TextFormField(
               controller: nameController,
               cursorColor: Colors.white,
-              style: whiteFontedStyle(16),
+              style: whiteFontedStyle(16, context),
               autofocus: true,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
@@ -66,7 +66,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
                         width: 2,
                       )),
                   labelText: 'Name',
-                  labelStyle: whiteFontedStyle(16)),
+                  labelStyle: whiteFontedStyle(16, context)),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please provide a name';
@@ -79,7 +79,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
               controller: lastNameController,
               cursorColor: Colors.white,
               autofocus: true,
-              style: whiteFontedStyle(16),
+              style: whiteFontedStyle(16, context),
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 prefixIcon: const Icon(
@@ -105,7 +105,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
                       width: 2,
                     )),
                 labelText: 'Last Name',
-                labelStyle: whiteFontedStyle(16),
+                labelStyle: whiteFontedStyle(16, context),
               ),
               validator: (value) {
                 if (value!.isEmpty) {
@@ -133,7 +133,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
               },
               child: Text(
                 'Done',
-                style: whiteFontedStyle(20),
+                style: whiteFontedStyle(20, context),
               ),
             ),
             TextButton(
@@ -145,7 +145,7 @@ class _NameDialogState extends ConsumerState<NameDialog> {
               },
               child: Text(
                 'Cancel',
-                style: whiteFontedStyle(20),
+                style: whiteFontedStyle(20, context),
               ),
             ),
           ],

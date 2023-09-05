@@ -21,7 +21,7 @@ class NameButtonChild extends ConsumerWidget {
     } else {
       return Center(
         child: Text('${startScreen.life.name} ${startScreen.life.lastName}',
-            style: whiteFontedStyle(20)),
+            style: whiteFontedStyle(20, context)),
       );
     }
   }

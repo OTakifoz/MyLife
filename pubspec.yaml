@@ -47,6 +47,9 @@ dependencies:
   cloud_firestore: ^4.8.4
   uuid: ^3.0.7
   random_name_generator: ^1.1.0
+  video_player: ^2.7.0
+  statistics: ^1.0.25
+  dart_statistics: ^0.1.0-nullsafety.0
   
 
 dev_dependencies:
@@ -94,6 +97,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/videos/
+    
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

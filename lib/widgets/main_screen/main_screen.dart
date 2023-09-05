@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/references/pallette.dart';
-import 'package:my_life/models/life.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/main_screen_widgets/action_bar.dart';
-import 'package:my_life/widgets/main_screen/main_menu/main_menu.dart';
 import 'package:my_life/widgets/main_screen/main_screen_widgets/property_chart.dart';
+
+import 'main_menu/main_menu.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -23,48 +24,70 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
     String? _name = _lifeProvider.life!.name;
     String? _lastName = _lifeProvider.life!.lastName;
-    Gender? _gender = _lifeProvider.life!.gender;
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height,
+      height: height(context),
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            GestureDetector(
+              onTap: () {},
+              child: const SizedBox(
+                width: 56,
+                height: 48,
+              ),
+            )
+          ],
           leading: IconButton(
             icon: const Icon(
               Icons.menu,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const MainMenu(),
-                ),
-              );
+              pushTo(context, const MainMenu());
             },
           ),
-          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-          title: Text(
-              'MyLife - '
-              '$_name '
-              '$_lastName',
-              style: whiteFontedStyle(22)),
-          backgroundColor:
-              _gender == Gender.male ? Colors.blue[700] : Colors.pink[700],
+          title: Center(
+              child: Text('MYLIFE', style: whiteFontedStyle(22, context))),
+          backgroundColor: genderBasedWidgetColor(ref),
         ),
         body: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color:
-                  _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
-            ),
+          child: SizedBox(
+            width: width(context),
+            height: height(context),
             child: Column(
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(_lifeProvider.life!.background!.father!.name!)
-                  ],
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      border: Border.symmetric(
+                          horizontal: BorderSide(color: Colors.grey[700]!))),
+                  height: height(context) * 0.06,
+                  width: width(context),
+                  child: Row(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '$_name '
+                        '$_lastName',
+                        style: colorlessFontedStyle(
+                            16, genderBasedTitleColor(ref)),
+                      ),
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(_lifeProvider.life!.balance.toString()),
+                          ),
+                          const Center(
+                            child: Text('Bank Balance'),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
                 ),
                 const Spacer(),
                 const ActionBar(),

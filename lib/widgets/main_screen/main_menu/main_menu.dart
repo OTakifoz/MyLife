@@ -4,14 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/references/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/widgets/main_screen/main_menu/main_menu_paths/view_lives_screen.dart';
-import 'package:my_life/widgets/main_screen/main_screen.dart';
-
+import '../action_bar_paths/relationships_screen/custom_spacer.dart';
 import 'package:my_life/widgets/start_screen/start_screen.dart';
-
-import '../../../models/life.dart';
 import '../../../providers/firebase_provider.dart';
 
 class MainMenu extends ConsumerWidget {
@@ -25,15 +23,6 @@ class MainMenu extends ConsumerWidget {
     final firebase = ref.watch(firebaseProvider);
 
     // ignore: no_leading_underscores_for_local_identifiers
-    Gender? _gender = person.life!.gender;
-
-    Color? personColor =
-        _gender == Gender.male ? Colors.blue[700] : Colors.pink[700];
-
-    Color? personTitleTextColor =
-        _gender == Gender.male ? Colors.blue[900] : Colors.pink[900];
-    Color? personSubtitleTextColor =
-        _gender == Gender.male ? Colors.blue[700] : Colors.pink[700];
 
     void showAccountDialog() async {
       final user = FirebaseAuth.instance.currentUser!;
@@ -51,8 +40,6 @@ class MainMenu extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor:
-          _gender == Gender.male ? Colors.blue[100] : Colors.pink[100],
       appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -61,9 +48,9 @@ class MainMenu extends ConsumerWidget {
             icon: const Icon(Icons.arrow_back, weight: 100),
           ),
           automaticallyImplyLeading: false,
-          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-          title: Text('Main Menu', style: whiteFontedStyle(22)),
-          backgroundColor: personColor),
+          toolbarHeight: height(context) * 0.08,
+          title: Text('Main Menu', style: whiteFontedStyle(22, context)),
+          backgroundColor: genderBasedWidgetColor(ref)),
       body: ListView(
         children: [
           ListTile(
@@ -71,16 +58,12 @@ class MainMenu extends ConsumerWidget {
                 width: 60,
                 height: 48,
                 child: Image.asset('assets/icons/baby-icon.png')),
-            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
-            subtitleTextStyle:
-                colorlessFontedStyle(16, personSubtitleTextColor),
+            titleTextStyle:
+                colorlessFontedStyle(20, genderBasedTitleColor(ref)),
+            subtitleTextStyle: whiteFontedStyle(16, context),
             onTap: () {
               firebase.fetchUserLives();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const MainScreen(),
-                ),
-              );
+              pushAndReplaceTo(context, const MainMenu());
             },
             subtitle: const Text('Continue your latest life'),
             title: const Text(
@@ -88,19 +71,20 @@ class MainMenu extends ConsumerWidget {
               'Continue Life',
             ),
           ),
+          const CustomSpacer(),
           ListTile(
             leading: SizedBox(
                 width: 60,
                 height: 48,
                 child: Image.asset('assets/icons/sun-icon.png')),
-            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
+            titleTextStyle:
+                colorlessFontedStyle(20, genderBasedTitleColor(ref)),
             subtitleTextStyle:
-                colorlessFontedStyle(16, personSubtitleTextColor),
+                colorlessFontedStyle(16, genderBasedTitleColor(ref)),
             onTap: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const StartScreen(),
-                ),
+              pushAndReplaceTo(
+                context,
+                const StartScreen(),
               );
             },
             subtitle: const Text('Start a new life'),
@@ -109,21 +93,18 @@ class MainMenu extends ConsumerWidget {
               'New Life',
             ),
           ),
+          const CustomSpacer(),
           ListTile(
             leading: SizedBox(
                 width: 60,
                 height: 48,
                 child: Image.asset('assets/icons/baby-icon.png')),
-            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
-            subtitleTextStyle:
-                colorlessFontedStyle(16, personSubtitleTextColor),
+            titleTextStyle:
+                colorlessFontedStyle(20, genderBasedTitleColor(ref)),
+            subtitleTextStyle: whiteFontedStyle(16, context),
             onTap: () {
               firebase.fetchUserLives();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const LivesScreen(),
-                ),
-              );
+              pushAndReplaceTo(context, const LivesScreen());
             },
             subtitle: const Text('Switch between your lives'),
             title: const Text(
@@ -131,6 +112,7 @@ class MainMenu extends ConsumerWidget {
               'Lives',
             ),
           ),
+          const CustomSpacer(),
           ListTile(
             leading: SizedBox(
                 width: 60,
@@ -138,9 +120,10 @@ class MainMenu extends ConsumerWidget {
                 child: SizedBox(
                     width: 48,
                     child: Image.asset('assets/icons/logout-icon.png'))),
-            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
+            titleTextStyle:
+                colorlessFontedStyle(20, genderBasedTitleColor(ref)),
             subtitleTextStyle:
-                colorlessFontedStyle(16, personSubtitleTextColor),
+                colorlessFontedStyle(16, genderBasedTitleColor(ref)),
             onTap: () {
               Navigator.popUntil(context, (route) => route.isFirst);
               FirebaseAuth.instance.signOut();
@@ -151,14 +134,16 @@ class MainMenu extends ConsumerWidget {
               'Logout',
             ),
           ),
+          const CustomSpacer(),
           ListTile(
             leading: SizedBox(
                 width: 60,
                 height: 48,
                 child: Image.asset('assets/icons/profile-icon.png')),
-            titleTextStyle: colorlessFontedStyle(20, personTitleTextColor),
+            titleTextStyle:
+                colorlessFontedStyle(20, genderBasedTitleColor(ref)),
             subtitleTextStyle:
-                colorlessFontedStyle(16, personSubtitleTextColor),
+                colorlessFontedStyle(16, genderBasedTitleColor(ref)),
             onTap: () {
               showAccountDialog();
             },
@@ -168,6 +153,7 @@ class MainMenu extends ConsumerWidget {
               'Account',
             ),
           ),
+          const CustomSpacer(),
         ],
       ),
     );

@@ -12,8 +12,8 @@ enum Closeness {
 
 enum RelationType { mother, father, sister, brother }
 
-class Relation extends ModelBase {
-  Relation({
+class Relationship extends ModelBase {
+  Relationship({
     required this.age,
     required this.gender,
     required this.opinion,
@@ -32,8 +32,8 @@ class Relation extends ModelBase {
   Closeness? closeness;
   RelationType? relationType;
 
-  Relation copy() {
-    return Relation(
+  Relationship copy() {
+    return Relationship(
       age: age,
       gender: gender,
       lastName: lastName,
@@ -61,7 +61,7 @@ class Relation extends ModelBase {
       ..removeWhere((key, value) => value == null);
   }
 
-  Relation.fromMap(Map<String, dynamic> data) : super.fromMap(data) {
+  Relationship.fromMap(Map<String, dynamic> data) : super.fromMap(data) {
     Gender? _gender;
     if (data['gender'] == "Gender.male") {
       _gender = Gender.male;

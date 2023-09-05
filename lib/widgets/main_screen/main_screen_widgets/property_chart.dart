@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/references/pallette.dart';
 import 'package:my_life/providers/life_provider.dart';
-import '../../../models/life.dart';
 
 class PropertyChart extends ConsumerWidget {
   const PropertyChart({super.key});
@@ -12,71 +12,17 @@ class PropertyChart extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final person = ref.watch(lifeProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    Color? healthBarColor;
-
     var _health = person.life!.health;
     var _happiness = person.life!.happiness;
     var _appearence = person.life!.appearence;
     var _intelligence = person.life!.intelligence;
-    var _gender = person.life!.gender;
-
-    if (_health > 70) {
-      healthBarColor = Colors.green;
-    }
-    if (_health <= 70 && _health >= 50) {
-      healthBarColor = Colors.yellow;
-    }
-    if (_health < 50 && _health >= 30) {
-      healthBarColor = Colors.orange;
-    }
-    if (_health < 30) {
-      healthBarColor = Colors.red;
-    }
-    Color? happinessBarColor;
-    if (_happiness > 70) {
-      happinessBarColor = Colors.green;
-    }
-    if (_happiness <= 70 && _happiness >= 50) {
-      happinessBarColor = Colors.yellow;
-    }
-    if (_happiness < 50 && _happiness >= 30) {
-      happinessBarColor = Colors.orange;
-    }
-    if (_happiness < 30) {
-      happinessBarColor = Colors.red;
-    }
-    Color? appearenceBarColor;
-    if (_appearence > 70) {
-      appearenceBarColor = Colors.green;
-    }
-    if (_appearence <= 70 && _appearence >= 50) {
-      appearenceBarColor = Colors.yellow;
-    }
-    if (_appearence < 50 && _appearence >= 30) {
-      appearenceBarColor = Colors.orange;
-    }
-    if (_appearence < 30) {
-      appearenceBarColor = Colors.red;
-    }
-    Color? intelligenceBarColor;
-    if (_intelligence > 70) {
-      intelligenceBarColor = Colors.green;
-    }
-    if (_intelligence <= 70 && _intelligence >= 30) {
-      intelligenceBarColor = Colors.yellow;
-    }
-    if (_intelligence < 30) {
-      intelligenceBarColor = Colors.red;
-    }
-
     const barHeight = 20.0;
-    var barWidth = (screenWidth - 30) * 0.60;
-    var textWidth = (screenWidth - 30) * 0.40;
+    var barWidth = (width(context) - 30) * 0.60;
+    var textWidth = (width(context) - 30) * 0.40;
 
-    return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.25,
+    return Container(
+        decoration: BoxDecoration(color: Colors.grey[200]),
+        height: height(context) * 0.25,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
@@ -91,11 +37,7 @@ class PropertyChart extends ConsumerWidget {
                       children: [
                         Text(
                           style: colorlessFontedStyle(
-                            16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
-                          ),
+                              16, genderBasedTitleColor(ref)),
                           'Health',
                         ),
                         const SizedBox(
@@ -115,9 +57,6 @@ class PropertyChart extends ConsumerWidget {
                     width: barWidth,
                     height: barHeight,
                     decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
                       color: Colors.white,
                     ),
                     child: Row(
@@ -125,10 +64,7 @@ class PropertyChart extends ConsumerWidget {
                       children: [
                         Container(
                             decoration: BoxDecoration(
-                              color: healthBarColor,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              color: propertyBasedBarColor(_health),
                             ),
                             height: barHeight,
                             width: barWidth * 0.01 * (_health),
@@ -144,9 +80,7 @@ class PropertyChart extends ConsumerWidget {
                                             '$_health%',
                                             style: colorlessFontedStyle(
                                               16,
-                                              _gender == Gender.male
-                                                  ? Colors.blue[900]
-                                                  : Colors.pink[900],
+                                              genderBasedTitleColor(ref),
                                             ),
                                           ),
                                         ),
@@ -163,9 +97,7 @@ class PropertyChart extends ConsumerWidget {
                                     '$_appearence%',
                                     style: colorlessFontedStyle(
                                       16,
-                                      _gender == Gender.male
-                                          ? Colors.blue[900]
-                                          : Colors.pink[900],
+                                      genderBasedTitleColor(ref),
                                     ),
                                   ),
                                 ),
@@ -186,9 +118,7 @@ class PropertyChart extends ConsumerWidget {
                         Text(
                           style: colorlessFontedStyle(
                             16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
+                            genderBasedTitleColor(ref),
                           ),
                           'Happiness',
                         ),
@@ -209,19 +139,13 @@ class PropertyChart extends ConsumerWidget {
                     width: barWidth,
                     height: barHeight,
                     decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
                       color: Colors.white,
                     ),
                     child: Row(
                       children: [
                         Container(
                             decoration: BoxDecoration(
-                              color: happinessBarColor,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              color: propertyBasedBarColor(_happiness),
                             ),
                             height: barHeight,
                             width: barWidth * 0.01 * (_happiness),
@@ -237,9 +161,7 @@ class PropertyChart extends ConsumerWidget {
                                             '$_happiness%',
                                             style: colorlessFontedStyle(
                                               16,
-                                              _gender == Gender.male
-                                                  ? Colors.blue[900]
-                                                  : Colors.pink[900],
+                                              genderBasedTitleColor(ref),
                                             ),
                                           ),
                                         ),
@@ -256,9 +178,7 @@ class PropertyChart extends ConsumerWidget {
                                     '$_appearence%',
                                     style: colorlessFontedStyle(
                                       16,
-                                      _gender == Gender.male
-                                          ? Colors.blue[900]
-                                          : Colors.pink[900],
+                                      genderBasedTitleColor(ref),
                                     ),
                                   ),
                                 ),
@@ -279,9 +199,7 @@ class PropertyChart extends ConsumerWidget {
                         Text(
                           style: colorlessFontedStyle(
                             16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
+                            genderBasedTitleColor(ref),
                           ),
                           'Looks',
                         ),
@@ -302,19 +220,13 @@ class PropertyChart extends ConsumerWidget {
                     width: barWidth,
                     height: barHeight,
                     decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
                       color: Colors.white,
                     ),
                     child: Row(
                       children: [
                         Container(
                             decoration: BoxDecoration(
-                              color: appearenceBarColor,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              color: propertyBasedBarColor(_appearence),
                             ),
                             height: barHeight,
                             width: barWidth * 0.01 * (_appearence),
@@ -330,9 +242,7 @@ class PropertyChart extends ConsumerWidget {
                                             '$_appearence%',
                                             style: colorlessFontedStyle(
                                               16,
-                                              _gender == Gender.male
-                                                  ? Colors.blue[900]
-                                                  : Colors.pink[900],
+                                              genderBasedTitleColor(ref),
                                             ),
                                           ),
                                         ),
@@ -349,9 +259,7 @@ class PropertyChart extends ConsumerWidget {
                                     '$_appearence%',
                                     style: colorlessFontedStyle(
                                       16,
-                                      _gender == Gender.male
-                                          ? Colors.blue[900]
-                                          : Colors.pink[900],
+                                      genderBasedTitleColor(ref),
                                     ),
                                   ),
                                 ),
@@ -372,9 +280,7 @@ class PropertyChart extends ConsumerWidget {
                         Text(
                           style: colorlessFontedStyle(
                             16,
-                            _gender == Gender.male
-                                ? Colors.blue[900]
-                                : Colors.pink[900],
+                            genderBasedTitleColor(ref),
                           ),
                           'Smarts',
                         ),
@@ -395,19 +301,13 @@ class PropertyChart extends ConsumerWidget {
                     width: barWidth,
                     height: barHeight,
                     decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
                       color: Colors.white,
                     ),
                     child: Row(
                       children: [
                         Container(
                             decoration: BoxDecoration(
-                              color: intelligenceBarColor,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              color: propertyBasedBarColor(_intelligence),
                             ),
                             height: barHeight,
                             width: barWidth * 0.01 * (_intelligence),
@@ -423,9 +323,7 @@ class PropertyChart extends ConsumerWidget {
                                             '$_intelligence%',
                                             style: colorlessFontedStyle(
                                               16,
-                                              _gender == Gender.male
-                                                  ? Colors.blue[900]
-                                                  : Colors.pink[900],
+                                              genderBasedTitleColor(ref),
                                             ),
                                           ),
                                         ),
@@ -442,9 +340,7 @@ class PropertyChart extends ConsumerWidget {
                                     '$_intelligence%',
                                     style: colorlessFontedStyle(
                                       16,
-                                      _gender == Gender.male
-                                          ? Colors.blue[900]
-                                          : Colors.pink[900],
+                                      genderBasedTitleColor(ref),
                                     ),
                                   ),
                                 ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_life/lists/countries_list.dart';
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button_child.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_dialog.dart';
 import '../../../providers/start_screen_provider.dart';
@@ -25,7 +26,6 @@ class _CountrySelectionWidgetState
   @override
   Widget build(BuildContext context) {
     final startScreen = ref.watch(startScreenProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
     final randomCountry = Random();
 
     return SizedBox(
@@ -38,7 +38,7 @@ class _CountrySelectionWidgetState
               showCountryPicker();
             },
             style: ElevatedButton.styleFrom(
-              fixedSize: Size.fromWidth(screenWidth - 32),
+              fixedSize: Size.fromWidth(width(context) - 32),
               backgroundColor: startScreen.life.currentCountry != null
                   ? startScreen.life.currentCountry!.countryColor
                   : Colors.grey,

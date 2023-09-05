@@ -4,23 +4,25 @@ import 'package:my_life/lists/countries_list.dart';
 import 'package:my_life/references/model_base.dart';
 
 import 'country.dart';
-import 'background.dart';
+import 'family.dart';
 
 enum Gender { male, female }
 
 class Life extends ModelBase {
-  Life(
-      {required this.age,
-      required this.gender,
-      required this.happiness,
-      required this.health,
-      required this.intelligence,
-      required this.appearence,
-      required this.lastName,
-      required this.name,
-      required this.currentCountry,
-      required this.uid,
-      required this.background});
+  Life({
+    required this.age,
+    required this.gender,
+    required this.happiness,
+    required this.health,
+    required this.intelligence,
+    required this.appearence,
+    required this.lastName,
+    required this.name,
+    required this.currentCountry,
+    required this.uid,
+    required this.family,
+    required this.balance,
+  });
   int? age;
   Gender? gender;
   dynamic happiness;
@@ -31,7 +33,8 @@ class Life extends ModelBase {
   String? lastName;
   Country? currentCountry;
   String? uid;
-  Background? background;
+  Family? family;
+  int? balance;
 
   Life copy() {
     return Life(
@@ -45,7 +48,8 @@ class Life extends ModelBase {
         name: name,
         currentCountry: currentCountry,
         uid: uid,
-        background: background);
+        family: family,
+        balance: balance);
   }
 
   @override
@@ -61,7 +65,8 @@ class Life extends ModelBase {
       'name': name,
       'currentCountry': currentCountry!.name,
       'uid': uid,
-      'background': background!.toMap(),
+      'family': family!.toMap(),
+      'balance': balance
     }
       ..addAll(super.toMap())
       ..removeWhere((key, value) => value == null);
@@ -89,8 +94,9 @@ class Life extends ModelBase {
     name = data['name'];
     currentCountry = country;
     uid = data['uid'];
-    if (data['background'] != null) {
-      background = Background.fromMap(data['background']);
+    if (data['family'] != null) {
+      family = Family.fromMap(data['family']);
     }
+    balance = data['balance'];
   }
 }

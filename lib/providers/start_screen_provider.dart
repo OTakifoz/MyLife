@@ -19,7 +19,8 @@ class StartScreenNotifier extends ChangeNotifier {
     name: null,
     currentCountry: null,
     uid: null,
-    background: null,
+    family: null,
+    balance: 0,
   );
 
   void chooseCountry(Country? country) {

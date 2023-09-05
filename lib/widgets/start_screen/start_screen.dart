@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_life/models/background.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Family;
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/references/pallette.dart';
-import 'package:my_life/models/relation.dart';
 import 'package:my_life/providers/life_provider.dart';
 import 'package:my_life/references/random_generators.dart';
 import 'package:my_life/widgets/start_screen/country_button/country_selection_button.dart';
@@ -12,9 +11,7 @@ import 'package:my_life/widgets/main_screen/main_screen.dart';
 import 'package:my_life/providers/start_screen_provider.dart';
 import 'package:my_life/models/life.dart';
 import 'package:my_life/widgets/start_screen/name_button/name_button.dart';
-import 'package:random_name_generator/random_name_generator.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../providers/firebase_provider.dart';
 import '../main_screen/main_menu/main_menu.dart';
@@ -51,58 +48,9 @@ class _StartScreenState extends ConsumerState<StartScreen> {
   Widget build(
     BuildContext context,
   ) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     final startScreen = ref.watch(startScreenProvider);
     final newLife = ref.watch(lifeProvider);
     final firebase = ref.watch(firebaseProvider);
-
-    void createRandomFamily() {
-      var randomNames = RandomNames(startScreen.life.currentCountry != null
-          ? startScreen.life.currentCountry!.zone
-          : Zone.us);
-      final familyName = startScreen.life.lastName;
-      final father = Relation(
-          age: randomMinMaxInteger(18, 45),
-          gender: Gender.male,
-          lastName: familyName,
-          name: randomNames.manName(),
-          uid: const Uuid().v4(),
-          closeness:
-              Closeness.values[Random().nextInt(Closeness.values.length - 1)],
-          opinion: randomMinMaxInteger(25, 75),
-          relationType: RelationType.father);
-      final mother = Relation(
-        age: randomMinMaxInteger(father.age! - 5, father.age! + 5),
-        gender: Gender.female,
-        opinion: randomMinMaxInteger(25, 75),
-        lastName: familyName,
-        name: randomNames.womanName(),
-        uid: const Uuid().v4(),
-        closeness: father.closeness != Closeness.blood
-            ? Closeness.blood
-            : Closeness.values[Random().nextInt(Closeness.values.length - 1)],
-        relationType: RelationType.mother,
-      );
-      final sibling1 = Relation(
-          age: randomMinMaxInteger(1, mother.age! - 17),
-          gender: Gender.male,
-          opinion: 50,
-          lastName: familyName,
-          name: randomNames.manName(),
-          uid: const Uuid().v4(),
-          closeness: Closeness.blood,
-          relationType: RelationType.brother);
-
-      startScreen.life.background = Background(
-        familyName: familyName,
-        father: father,
-        mother: mother,
-        sibling1: sibling1,
-        sibling2: null,
-        sibling3: null,
-      );
-    }
 
     void getRandomValues() {
       startScreen.updateUuid();
@@ -114,7 +62,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
       randomIntelligence = Random();
       int intelligence = randomIntelligence.nextInt(100);
       startScreen.updateIntelligence(intelligence);
-      createRandomFamily();
+      startScreen.life.family = createRandomFamily(ref);
     }
 
     bool checkNullableValues() {
@@ -157,10 +105,10 @@ class _StartScreenState extends ConsumerState<StartScreen> {
     }
 
     return SizedBox(
-      height: screenHeight,
+      height: height(context),
       child: Scaffold(
         body: Container(
-          height: screenHeight,
+          height: height(context),
           decoration: const BoxDecoration(
               gradient: LinearGradient(
                   colors: [Colors.amber, Colors.white],
@@ -173,7 +121,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: screenHeight * 0.2,
+                    height: height(context) * 0.2,
                     child: Row(
                       children: [
                         if (newLife.life != null)
@@ -201,7 +149,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size.fromWidth(
-                              screenWidth - 32,
+                              width(context) - 32,
                             ),
                             backgroundColor: Colors.green[900],
                             shape: RoundedRectangleBorder(
@@ -210,12 +158,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                           ),
                           child: Text('Start New Life',
                               textAlign: TextAlign.center,
-                              style: whiteFontedStyle(20)
-                              // GoogleFonts.gloriaHallelujah(
-                              //     fontWeight: FontWeight.bold,
-                              //     fontSize: 20,
-                              //     textStyle: const TextStyle(color: Colors.white)),
-                              ),
+                              style: whiteFontedStyle(20, context)),
                         ),
                       ),
                     ]),
@@ -232,8 +175,8 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                         Expanded(
                           child: ToggleSwitch(
                             customWidths: [
-                              (screenWidth - 33) / 2,
-                              (screenWidth - 33) / 2
+                              (width(context) - 33) / 2,
+                              (width(context) - 33) / 2
                             ],
                             initialLabelIndex: _selectedGender.index,
                             cornerRadius: 30.0,
@@ -241,7 +184,7 @@ class _StartScreenState extends ConsumerState<StartScreen> {
                             inactiveBgColor: Colors.grey,
                             inactiveFgColor: Colors.white,
                             totalSwitches: 2,
-                            customTextStyles: [whiteFontedStyle(20)],
+                            customTextStyles: [whiteFontedStyle(20, context)],
                             labels: const [
                               'Male',
                               'Female',

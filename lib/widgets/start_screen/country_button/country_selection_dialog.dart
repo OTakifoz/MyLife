@@ -42,14 +42,14 @@ class _CountrySelectionDialogState
                 contentBorderRadius: 20,
                 header: Text(
                   'Select Country',
-                  style: whiteFontedStyle(20),
+                  style: whiteFontedStyle(20, context),
                 ),
                 content: Column(
                   children: [
                     for (final country in countries)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle: whiteFontedStyle(16),
+                          textStyle: whiteFontedStyle(16, context),
                           backgroundColor: country.countryColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -79,7 +79,7 @@ class _CountrySelectionDialogState
             },
             child: Text(
               'Cancel',
-              style: whiteFontedStyle(20),
+              style: whiteFontedStyle(20, context),
             ))
       ],
     );

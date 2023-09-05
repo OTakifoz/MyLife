@@ -66,7 +66,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                           children: [
                             TextFormField(
                               controller: emailController,
-                              style: whiteFontedStyle(16),
+                              style: whiteFontedStyle(16, context),
                               cursorColor: Colors.white,
                               autocorrect: false,
                               autofocus: true,
@@ -99,7 +99,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                     ),
                                   ),
                                   labelText: 'Email',
-                                  labelStyle: whiteFontedStyle(16)),
+                                  labelStyle: whiteFontedStyle(16, context)),
                               onSaved: (newValue) {
                                 emailController.text = newValue!;
                               },
@@ -121,7 +121,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                 children: [
                                   TextFormField(
                                     controller: usernameController,
-                                    style: whiteFontedStyle(16),
+                                    style: whiteFontedStyle(16, context),
                                     cursorColor: Colors.white,
                                     autocorrect: false,
                                     autofocus: true,
@@ -157,7 +157,8 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                           ),
                                         ),
                                         labelText: 'Username',
-                                        labelStyle: whiteFontedStyle(16)),
+                                        labelStyle:
+                                            whiteFontedStyle(16, context)),
                                     onSaved: (newValue) {
                                       usernameController.text = newValue!;
                                     },
@@ -174,7 +175,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                 ],
                               ),
                             TextFormField(
-                              style: whiteFontedStyle(16),
+                              style: whiteFontedStyle(16, context),
                               controller: passwordController,
                               cursorColor: Colors.white,
                               autofocus: true,
@@ -197,7 +198,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                       borderSide: const BorderSide(
                                           width: 2, color: Colors.white)),
                                   labelText: 'Password',
-                                  labelStyle: whiteFontedStyle(16)),
+                                  labelStyle: whiteFontedStyle(16, context)),
                               onSaved: (newValue) {
                                 passwordController.text = newValue!;
                               },
@@ -220,7 +221,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       TextFormField(
-                                        style: whiteFontedStyle(16),
+                                        style: whiteFontedStyle(16, context),
                                         cursorColor: Colors.white,
                                         autofocus: true,
                                         keyboardType: TextInputType.text,
@@ -248,7 +249,8 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                                     width: 2,
                                                     color: Colors.white)),
                                             labelText: 'Confirm Password',
-                                            labelStyle: whiteFontedStyle(16)),
+                                            labelStyle:
+                                                whiteFontedStyle(16, context)),
                                         validator: (value) {
                                           if (passwordController.text !=
                                               value) {
@@ -279,7 +281,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                         }),
                                     Text(
                                       'Show Password',
-                                      style: whiteFontedStyle(12),
+                                      style: whiteFontedStyle(12, context),
                                     )
                                   ],
                                 ),
@@ -291,7 +293,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                     },
                                     child: Text(
                                       'Forgot Password?',
-                                      style: whiteFontedStyle(12),
+                                      style: whiteFontedStyle(12, context),
                                     ),
                                   )
                               ],
@@ -318,7 +320,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                       authProvider.signWithEmailAndPassword();
                                     },
                                     child: Text(_isLogin ? 'Log In' : 'Sign Up',
-                                        style: whiteFontedStyle(16)),
+                                        style: whiteFontedStyle(16, context)),
                                   ),
                                 ),
                               ],
@@ -326,7 +328,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                             const SizedBox(
                               height: 12,
                             ),
-                            Text('Or', style: whiteFontedStyle(16)),
+                            Text('Or', style: whiteFontedStyle(16, context)),
                             const SizedBox(
                               height: 12,
                             ),
@@ -363,7 +365,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                         ),
                                         Text(
                                           'Sign With Google',
-                                          style: whiteFontedStyle(16),
+                                          style: whiteFontedStyle(16, context),
                                         ),
                                         const SizedBox(
                                           width: 48,
@@ -388,7 +390,7 @@ class _AuthenticationScreenState extends ConsumerState<AuthenticationScreen> {
                                   _isLogin
                                       ? "Don't have an account? Create one"
                                       : 'Already have an account? Login',
-                                  style: whiteFontedStyle(16)),
+                                  style: whiteFontedStyle(16, context)),
                             ),
                           ],
                         ),

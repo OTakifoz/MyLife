@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_life/references/frequently_used_variables.dart';
 import 'package:my_life/references/pallette.dart';
 import 'package:my_life/models/relation.dart';
 
@@ -9,25 +10,11 @@ import '../../../../models/life.dart';
 import '../../../../providers/life_provider.dart';
 
 class ChildRelationListTile extends ConsumerWidget {
-  final Relation relation;
+  final Relationship relation;
   const ChildRelationListTile({super.key, required this.relation});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Color? opinionBarColor;
-    if (relation.opinion > 50) {
-      opinionBarColor = Colors.green;
-    }
-    if (relation.opinion <= 50 && relation.opinion >= 20) {
-      opinionBarColor = Colors.yellow;
-    }
-    if (relation.opinion < 20 && relation.opinion >= 10) {
-      opinionBarColor = Colors.orange;
-    }
-    if (relation.opinion < 10) {
-      opinionBarColor = Colors.red;
-    }
-
     // ignore: unused_local_variable
     final _lifeProvider = ref.watch(lifeProvider);
     Gender? gender = _lifeProvider.life!.gender;
@@ -55,12 +42,12 @@ class ChildRelationListTile extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   children: [
                     Container(
-                      color: Colors.white,
+                      color: Colors.grey[300],
                       height: 10,
                       width: screenWidth * 0.5,
                     ),
                     Container(
-                      color: opinionBarColor,
+                      color: propertyBasedBarColor(relation.opinion),
                       height: 10,
                       width: screenWidth * 0.5 * relation.opinion * 0.01,
                     ),
